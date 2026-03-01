@@ -35,87 +35,81 @@ vademecum_project/
 ├─ services/             # Lógica de negocio y servicios
 └─ utils/                # Funciones y utilidades auxiliares
 
-
-## ⚙️ Instalación y Ejecución
-
-### 1️⃣ Clonar el repositorio 
-```bash
+⚙️ Instalación y Ejecución
+1️⃣ Clonar el repositorio
 git clone https://github.com/Ramos-Dillan/proyecto_algoritmos.git
 cd proyecto_algoritmos
+2️⃣ Crear entorno virtual
 
+Windows:
 
-### 2️⃣ Crear entorno virtual
 python -m venv venv
 venv\Scripts\activate
 
-### 3️⃣ Instalar dependencias
+Mac / Linux:
+
+python3 -m venv venv
+source venv/bin/activate
+3️⃣ Instalar dependencias
 pip install -r requirements.txt
+4️⃣ Configurar variables de entorno
 
+Crear archivo .env con el siguiente contenido:
 
-## ⚙️ Instalación y Ejecución
-
-### 4️⃣ Configurar variables de entorno
-
-Crear archivo `.env`:
-```env
 DATABASE_URL=postgresql://usuario:password@localhost:5432/vademecumDB
 SECRET_KEY=clave_secreta
 5️⃣ Ejecutar el servidor
-bash
 python app.py
-Servidor: http://127.0.0.1:5000
+
+Servidor corriendo en: http://127.0.0.1:5000
 
 🚀 Uso de la API (Postman)
 🔹 Crear Laboratorio
-text
+
 POST http://127.0.0.1:5000/laboratories
 Body (JSON):
 
-json
 {
   "name": "Pfizer",
   "country": "USA"
 }
+
 Respuesta:
 
-json
 {
   "message": "Laboratory created successfully"
 }
 🔹 Crear Grupo Terapéutico
-text
+
 POST http://127.0.0.1:5000/therapeutic-groups
 Body (JSON):
 
-json
 {
   "name": "Analgesicos",
   "description": "Medicamentos para el dolor"
 }
 🔹 Crear Producto
-text
+
 POST http://127.0.0.1:5000/products
 Body (JSON):
 
-json
 {
   "name": "Ibuprofeno",
   "price": 15000,
   "laboratory_id": 1,
   "therapeutic_group_id": 1
 }
+
 Respuesta:
 
-json
 {
   "message": "Product created successfully"
 }
 🔹 Obtener Productos
-text
+
 GET http://127.0.0.1:5000/products
 Respuesta:
 
-json
 [
   {
     "id": 1,
@@ -126,31 +120,19 @@ json
   }
 ]
 📸 Evidencias
-Evidencias proyecto
+[Evidencias.proyecto.pdf](https://github.com/user-attachments/files/25666563/Evidencias.proyecto.pdf)
+
 
 📌 .gitignore
-El proyecto incluye .gitignore para evitar subir:
+
+El proyecto incluye .gitignore para evitar subir archivos innecesarios:
 
 venv/
-
 .env
-
 __pycache__/
-
-Archivos temporales
-
+archivos temporales
 👨‍💻 Autor
+
 Dillan Ramos Barrera
 Proyecto – Algoritmos
 Ingeniería Biomédica
-
-
-
-
-
-
-
-
-
-
-
