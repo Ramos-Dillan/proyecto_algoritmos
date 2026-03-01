@@ -2,6 +2,40 @@
 
 API REST desarrollada en **Python + Flask** para la gestión de medicamentos, laboratorios y grupos terapéuticos.
 
+### 📄 Normalización del archivo Vademécum Optometría
+
+Para normalizar el archivo se realizó el siguiente procedimiento:
+
+Identificación de entidades principales:
+
+Laboratory: Nombre del laboratorio que produce el medicamento.
+
+TherapeuticGroup: Familia o mecanismo de acción de los medicamentos. Cada sheet del Excel corresponde a un grupo terapéutico.
+
+Product: Medicamentos específicos, con atributos de nombre genérico, nombre comercial, concentración, forma farmacéutica, posología, notas, estado activo (is_active) y relación con laboratorio y grupo terapéutico.
+
+Atributos adicionales:
+
+description o potential_illness en TherapeuticGroup: corresponde a la descripción de uso o indicaciones del grupo de medicamentos (ej: "Este tipo de medicamentos se utilizan en infecciones oculares bacterianas externas como conjuntivitis, blefaritis o queratitis").
+
+is_active en Product: indica si el medicamento está actualmente disponible o activo.
+
+Relaciones establecidas:
+
+Un Laboratory puede producir muchos Products → relación 1:N.
+
+Un TherapeuticGroup puede tener muchos Products → relación 1:N.
+
+Cada Product pertenece a un Laboratory y a un TherapeuticGroup → llaves foráneas (laboratory_id, therapeutic_group_id).
+
+Normalización lograda:
+
+Separación de datos repetidos (laboratorios y grupos terapéuticos) en tablas independientes.
+
+Eliminación de redundancias en productos, concentraciones y notas.
+
+Cada tabla tiene su llave primaria y relaciones establecidas, lo que permite integridad referencial y facilita consultas CRUD desde Python.
+
 ## 🧠 Descripción
 
 Esta API permite:
@@ -230,6 +264,91 @@ DELETE http://127.0.0.1:5000/products/<id>
   "message": "Product deleted successfully"
 }
 ```
+##Therapeutic_groups
+#Crear grupo terapéutico
+```
+ POST http://127.0.0.1:5000/therapeutic-groups
+```
+
+#Body(JSON)
+```
+{
+  "name": "Antibiotics",
+  "mechanism": "Bacterial inhibition",
+  "description": "Drugs used to fight infections"
+}
+```
+#Respuesta
+```
+{
+    "data": {
+        "id": 2,
+        "name": "Antibiotics"
+    },
+    "message": "Grupo terapéutico creado",
+    "success": true
+}
+```
+
+#Obtener grupos terapeuticos
+```
+GET http://127.0.0.1:5000/therapeutic-groups
+```
+#Respuesta
+```
+{
+            "description": "Updated description for antibiotics",
+            "id": 2,
+            "mechanism": "Bacterial inhibition improved",
+            "name": "Antibiotics Updated"
+        },
+        {
+            "description": "Drugs used to fight infections",
+            "id": 3,
+            "mechanism": "Bacterial inhibition",
+            "name": "Antibiotics"
+        }
+    ],
+    "message": "Lista de grupos",
+   
+}
+```
+
+#Actualizar grupo terapeutico
+```
+PUT http://127.0.0.1:5000/therapeutic-groups/<id>
+```
+#Body(JSON)
+```
+{
+  "name": "Antibiotics Updated",
+  "mechanism": "Bacterial inhibition improved",
+  "description": "Updated description for antibiotics"
+}
+```
+#Respuesta
+```
+{
+    "data": {
+        "description": "Updated description for antibiotics",
+        "id": 1,
+        "mechanism": "Bacterial inhibition improved",
+        "name": "Antibiotics Updated"
+    },
+    "message": "Grupo terapéutico actualizado",
+    "success": true
+}
+```
+#Eliminar grupo terapeutico
+```
+DELETE http://127.0.0.1:5000/therapeutic-groups/<id>
+```
+#Respuesta 
+```
+{
+  "message": "Therapeutic group deleted successfully"
+}
+```
 ### 📸Documento evidencias 
 [Evidencias.proyecto.pdf](https://github.com/user-attachments/files/25667088/Evidencias.proyecto.pdf)
 
@@ -245,6 +364,7 @@ El proyecto incluye .gitignore para evitar subir:
 Dillan Ramos Barrera
 Proyecto – Algoritmos
 Ingeniería Biomédica
+
 
 
 
