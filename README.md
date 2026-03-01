@@ -1,72 +1,71 @@
-API Vademécum – Proyecto Algoritmos
-API REST desarrollada en Python + Flask para la gestión de medicamentos, laboratorios y grupos terapéuticos.
+# API Vademécum – Proyecto Algoritmos
 
-🧠 Descripción
+API REST desarrollada en **Python + Flask** para la gestión de medicamentos, laboratorios y grupos terapéuticos.
+
+## 🧠 Descripción
+
 Esta API permite:
+- ✅ Crear y consultar **laboratorios**
+- ✅ Crear y consultar **grupos terapéuticos**
+- ✅ Crear y consultar **productos (medicamentos)**
+- ✅ Gestionar relaciones entre las tablas
 
-Crear y consultar laboratorios
+**Base de datos:** PostgreSQL  
+**Nombre DB:** `vademecumDB`
 
-Crear y consultar grupos terapéuticos
+## 🗄 Estructura de la Base de Datos
 
-Crear y consultar productos (medicamentos)
+| Tabla | Campos |
+|-------|--------|
+| **🏭 laboratory** | `id`, `name`, `country` |
+| **🏥 therapeutic_groups** | `id`, `name`, `description` |
+| **💊 products** | `id`, `name`, `price`, `laboratory_id (FK)`, `therapeutic_group_id (FK)` |
 
-Gestionar relaciones entre las tablas
-
-Base de datos utilizada: PostgreSQL
-Nombre de la base de datos: vademecumDB
-
-🗄 Estructura de la Base de Datos
-La base de datos contiene 3 tablas:
-
-Tabla	Campos
-🏭 laboratory	id, name, country
-🏥 therapeutic_groups	id, name, description
-💊 products	id, name, price, laboratory_id (FK), therapeutic_group_id (FK)
-📂 Estructura del Proyecto
-text
+## 📂 Estructura del Proyecto
 vademecum_project/
-├─ app.py
-├─ database.py
-├─ config.py
-├─ .env
-├─ .gitignore
-├─ requirements.txt
-├─ README.md
-├─ models/
-├─ routes/
-├─ services/
-└─ utils/
-⚙️ Instalación y Ejecución
-1️⃣ Clonar el repositorio
-bash
-git clone https://github.com/TU_USUARIO/TU_REPOSITORIO.git
-cd TU_REPOSITORIO
-2️⃣ Crear entorno virtual
-Windows:
+├─ app.py                # Archivo principal de la aplicación
+├─ database.py           # Configuración y conexión a la base de datos
+├─ config.py             # Configuraciones generales de la app
+├─ .env                  # Variables de entorno
+├─ .gitignore            # Archivos y carpetas ignoradas por Git
+├─ requirements.txt      # Dependencias del proyecto
+├─ README.md             # Documentación del proyecto
+├─ models/               # Modelos de datos
+├─ routes/               # Rutas de la aplicación
+├─ services/             # Lógica de negocio y servicios
+└─ utils/                # Funciones y utilidades auxiliares
 
-bash
+
+## ⚙️ Instalación y Ejecución
+
+### 1️⃣ Clonar el repositorio 
+```bash
+git clone https://github.com/Ramos-Dillan/proyecto_algoritmos.git
+cd proyecto_algoritmos
+
+
+### 2️⃣ Crear entorno virtual
 python -m venv venv
 venv\Scripts\activate
-Mac/Linux:
 
-bash
-python3 -m venv venv
-source venv/bin/activate
-3️⃣ Instalar dependencias
-bash
+### 3️⃣ Instalar dependencias
 pip install -r requirements.txt
-4️⃣ Configurar variables de entorno
-Crear archivo .env en la raíz del proyecto:
 
-text
+
+## ⚙️ Instalación y Ejecución
+
+### 4️⃣ Configurar variables de entorno
+
+Crear archivo `.env`:
+```env
 DATABASE_URL=postgresql://usuario:password@localhost:5432/vademecumDB
 SECRET_KEY=clave_secreta
 5️⃣ Ejecutar el servidor
 bash
 python app.py
-El servidor se ejecutará en: http://127.0.0.1:5000
+Servidor: http://127.0.0.1:5000
 
-🚀 Uso de la API
+🚀 Uso de la API (Postman)
 🔹 Crear Laboratorio
 text
 POST http://127.0.0.1:5000/laboratories
@@ -83,10 +82,6 @@ json
 {
   "message": "Laboratory created successfully"
 }
-
-
-
-
 🔹 Crear Grupo Terapéutico
 text
 POST http://127.0.0.1:5000/therapeutic-groups
@@ -115,10 +110,10 @@ json
 {
   "message": "Product created successfully"
 }
-🔹 Obtener todos los productos
+🔹 Obtener Productos
 text
 GET http://127.0.0.1:5000/products
-Respuesta esperada:
+Respuesta:
 
 json
 [
@@ -130,11 +125,10 @@ json
     "therapeutic_group": "Analgesicos"
   }
 ]
-📸 Documento Evidencias 
-[Evidencias proyecto.pdf](https://github.com/user-attachments/files/25665920/Evidencias.proyecto.pdf)
+📸 Evidencias
+Evidencias proyecto
 
-
-📌 Archivo .gitignore
+📌 .gitignore
 El proyecto incluye .gitignore para evitar subir:
 
 venv/
@@ -149,6 +143,13 @@ Archivos temporales
 Dillan Ramos Barrera
 Proyecto – Algoritmos
 Ingeniería Biomédica
+
+
+
+
+
+
+
 
 
 
