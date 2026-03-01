@@ -23,8 +23,6 @@ Esta API permite:
 
 ## 📂 Estructura del Proyecto
 
-
-
 vademecum_project/
 ├── app.py
 ├── database.py
@@ -37,4 +35,3 @@ vademecum_project/
 ├── routes/
 ├── services/
 └── utils/
-
