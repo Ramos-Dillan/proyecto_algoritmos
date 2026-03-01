@@ -63,6 +63,18 @@ pip install -r requirements.txt
 DATABASE_URL=postgresql://usuario:password@localhost:5432/vademecumDB
 SECRET_KEY=clave_secreta
 ```
+## ⚙️ Creación de tablas desde Python
+las tablas se crean automáticamente con SQLAlchemy ejecutando:
+```
+from database import db
+from models.laboratory import Laboratory
+from models.products import Product
+from models.therapeutic_groups import TherapeuticGroup
+
+# Crear todas las tablas en la DB
+db.create_all()
+print("Tablas creadas correctamente")
+```
 ### 5️⃣ Ejecutar el servidor
 ```
 python app.py
@@ -89,7 +101,32 @@ POST http://127.0.0.1:5000/laboratories
 }
 
 ```
-
+#Actualizacion 
+```
+PUT http://127.0.0.1:5000/laboratories/<id>
+```
+#Body (JSON)
+```
+{
+  "name": "Bayer Updated"
+}
+```
+#Respuesta 
+```
+{
+  "message": "Laboratory updated successfully"
+}
+```
+#Eliminar laboratorio
+```
+DELETE http://127.0.0.1:5000/laboratories/<id>
+```
+#Respuesta esperada
+```
+{
+  "message": "Laboratory deleted successfully"
+}
+```
 # Crear grupo terapeutico
 ```
 POST http://127.0.0.1:5000/therapeutic-groups
@@ -100,7 +137,7 @@ POST http://127.0.0.1:5000/therapeutic-groups
 ```
 {
   "name": "Analgestics",
-  "mechanism : "Pais relfet",
+  "mechanism: "Pain relief",
   "description" : "Diugs used to reduce pain"
   
 }
@@ -114,13 +151,13 @@ POST http://127.0.0.1:5000/products
 # Body (JSON):
 ```
 {
-  "genetic_name": "Paracetamol",
-  "comercial_name": Tylenol,
+  "generic_name": "Paracetamol",
+  "commercial_name": Tylenol,
   "concentration": "500 mg",
   "pharmaceutical_form": "Tablet",
   "dosage": "I tablet every 8h",
   "hotes": "Take after meals",
-  "is_activate" : true,
+  "is_active" : true,
   "laboratory_id": 1
 }
 
@@ -157,6 +194,42 @@ GET http://127.0.0.1:5000/products
 
 
 ```
+
+#Actualizar producto
+```
+PUT http://127.0.0.1:5000/products/<id>
+```
+
+#Body(JSON)
+```
+{
+  "generic_name": "Paracetamol Extra",
+  "commercial_name": "Tylenol Extra",
+  "concentration": "650mg",
+  "pharmaceutical_form": "Tablet",
+  "dosage": "1 tablet every 6h",
+  "notes": "Updated notes",
+  "is_active": false,
+  "therapeutic_group_id": 1,
+  "laboratory_id": 1
+}
+```
+#Respuesta
+```
+{
+    "message": "Product updated successfully",
+}
+```
+#Eliminar producto
+```
+DELETE http://127.0.0.1:5000/products/<id>
+```
+#Respuesta
+```
+{
+  "message": "Product deleted successfully"
+}
+```
 ### 📸Documento evidencias 
 [Evidencias.proyecto.pdf](https://github.com/user-attachments/files/25667088/Evidencias.proyecto.pdf)
 
@@ -172,6 +245,7 @@ El proyecto incluye .gitignore para evitar subir:
 Dillan Ramos Barrera
 Proyecto – Algoritmos
 Ingeniería Biomédica
+
 
 
 
