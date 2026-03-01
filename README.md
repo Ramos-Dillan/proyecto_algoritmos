@@ -22,16 +22,18 @@ Esta API permite:
 | **💊 products** | `id`, `name`, `price`, `laboratory_id (FK)`, `therapeutic_group_id (FK)` |
 
 ## 📂 Estructura del Proyecto
+
 vademecum_project/
-├─ app.py                # Archivo principal de la aplicación
-├─ database.py           # Configuración y conexión a la base de datos
-├─ config.py             # Configuraciones generales de la app
-├─ .env                  # Variables de entorno
-├─ .gitignore            # Archivos y carpetas ignoradas por Git
-├─ requirements.txt      # Dependencias del proyecto
-├─ README.md             # Documentación del proyecto
-├─ models/               # Modelos de datos
-├─ routes/               # Rutas de la aplicación
-├─ services/             # Lógica de negocio y servicios
-└─ utils/                # Funciones y utilidades auxiliares
+├─ app.py
+├─ database.py
+├─ config.py
+├─ .env
+├─ .gitignore
+├─ requirements.txt
+├─ README.md
+├─ models/
+├─ routes/
+├─ services/
+└─ utils/
+
 
