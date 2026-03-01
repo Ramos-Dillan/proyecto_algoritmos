@@ -83,6 +83,10 @@ json
 {
   "message": "Laboratory created successfully"
 }
+
+
+
+
 🔹 Crear Grupo Terapéutico
 text
 POST http://127.0.0.1:5000/therapeutic-groups
@@ -126,21 +130,9 @@ json
     "therapeutic_group": "Analgesicos"
   }
 ]
-📸 Evidencias
-La carpeta docs/ contiene los siguientes pantallazos requeridos:
+📸 Documento Evidencias 
+[Evidencias proyecto.pdf](https://github.com/user-attachments/files/25665920/Evidencias.proyecto.pdf)
 
-<img width="1105" height="205" alt="image" src="https://github.com/user-attachments/assets/5834ac64-5002-46fd-9959-cae753fc002f" />
-
-
-postman_create_laboratory.png
-
-postman_create_group.png
-
-postman_create_product.png
-
-postman_get_products.png
-
-database_tables.png
 
 📌 Archivo .gitignore
 El proyecto incluye .gitignore para evitar subir:
@@ -154,9 +146,10 @@ __pycache__/
 Archivos temporales
 
 👨‍💻 Autor
-Santiago Barrera
+Dillan Ramos Barrera
 Proyecto – Algoritmos
 Ingeniería Biomédica
+
 
 
 
