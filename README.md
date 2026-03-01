@@ -2,39 +2,48 @@
 
 API REST desarrollada en **Python + Flask** para la gestión de medicamentos, laboratorios y grupos terapéuticos.
 
-### 📄 Normalización del archivo Vademécum Optometría
+## 📄 Normalización del archivo Vademécum Optometría
 
 Para normalizar el archivo se realizó el siguiente procedimiento:
 
-Identificación de entidades principales:
+### 🔍 Identificación de entidades principales
 
-Laboratory: Nombre del laboratorio que produce el medicamento.
+- **Laboratory**: Nombre del laboratorio que produce el medicamento
+- **TherapeuticGroup**: Familia o mecanismo de acción de los medicamentos. Cada sheet del Excel corresponde a un grupo terapéutico
+- **Product**: Medicamentos específicos, con atributos de:
+  - Nombre genérico
+  - Nombre comercial  
+  - Concentración
+  - Forma farmacéutica
+  - Posología
+  - Notas
+  - Estado activo (`is_active`)
+  - Relación con laboratorio y grupo terapéutico
 
-TherapeuticGroup: Familia o mecanismo de acción de los medicamentos. Cada sheet del Excel corresponde a un grupo terapéutico.
+### ➕ Atributos adicionales
 
-Product: Medicamentos específicos, con atributos de nombre genérico, nombre comercial, concentración, forma farmacéutica, posología, notas, estado activo (is_active) y relación con laboratorio y grupo terapéutico.
+- **`description`** o **`potential_illness`** en **TherapeuticGroup**: Descripción de uso o indicaciones del grupo de medicamentos  
+  *Ejemplo*: "Este tipo de medicamentos se utilizan en infecciones oculares bacterianas externas como conjuntivitis, blefaritis o queratitis"
+- **`is_active`** en **Product**: Indica si el medicamento está actualmente disponible o activo
 
-Atributos adicionales:
+### 🔗 Relaciones establecidas
 
-description o potential_illness en TherapeuticGroup: corresponde a la descripción de uso o indicaciones del grupo de medicamentos (ej: "Este tipo de medicamentos se utilizan en infecciones oculares bacterianas externas como conjuntivitis, blefaritis o queratitis").
+Laboratory (1) ────── N Product (N)
+│
+TherapeuticGroup (1) ────── N Product (N)
 
-is_active en Product: indica si el medicamento está actualmente disponible o activo.
+text
 
-Relaciones establecidas:
+- **Un Laboratory** puede producir **muchos Products** → relación **1:N**
+- **Un TherapeuticGroup** puede tener **muchos Products** → relación **1:N**  
+- **Cada Product** pertenece a **un Laboratory** y **un TherapeuticGroup** → llaves foráneas (`laboratory_id`, `therapeutic_group_id`)
 
-Un Laboratory puede producir muchos Products → relación 1:N.
+### ✅ Normalización lograda
 
-Un TherapeuticGroup puede tener muchos Products → relación 1:N.
-
-Cada Product pertenece a un Laboratory y a un TherapeuticGroup → llaves foráneas (laboratory_id, therapeutic_group_id).
-
-Normalización lograda:
-
-Separación de datos repetidos (laboratorios y grupos terapéuticos) en tablas independientes.
-
-Eliminación de redundancias en productos, concentraciones y notas.
-
-Cada tabla tiene su llave primaria y relaciones establecidas, lo que permite integridad referencial y facilita consultas CRUD desde Python.
+- ✅ Separación de datos repetidos (laboratorios y grupos terapéuticos) en tablas independientes
+- ✅ Eliminación de redundancias en productos, concentraciones y notas
+- ✅ Cada tabla tiene su llave primaria y relaciones establecidas
+- ✅ Integridad referencial para consultas CRUD desde Python
 
 ## 🧠 Descripción
 
@@ -364,6 +373,7 @@ El proyecto incluye .gitignore para evitar subir:
 Dillan Ramos Barrera
 Proyecto – Algoritmos
 Ingeniería Biomédica
+
 
 
 
