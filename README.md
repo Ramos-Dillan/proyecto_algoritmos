@@ -23,7 +23,7 @@ Esta API permite:
 
 ## 📂 Estructura del Proyecto
 
-vademecum_project/
+proyecto_algoritmos/
 ├── app.py
 ├── database.py
 ├── config.py
