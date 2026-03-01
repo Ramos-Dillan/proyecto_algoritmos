@@ -23,17 +23,18 @@ Esta API permite:
 
 ## 📂 Estructura del Proyecto
 
-vademecum_project/
-├─ app.py
-├─ database.py
-├─ config.py
-├─ .env
-├─ .gitignore
-├─ requirements.txt
-├─ README.md
-├─ models/
-├─ routes/
-├─ services/
-└─ utils/
 
+
+vademecum_project/
+├── app.py
+├── database.py
+├── config.py
+├── .env
+├── .gitignore
+├── requirements.txt
+├── README.md
+├── models/
+├── routes/
+├── services/
+└── utils/
 
