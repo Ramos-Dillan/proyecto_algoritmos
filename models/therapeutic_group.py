@@ -8,4 +8,9 @@ class TherapeuticGroup(db.Model):
     mechanism = db.Column(db.Text)
     description = db.Column(db.Text)
 
-    products = db.relationship("Product", backref="therapeutic_group", lazy=True)
+    # Relación con productos
+    products = db.relationship(
+        "Product",
+        backref="therapeutic_group",
+        lazy=True
+    )

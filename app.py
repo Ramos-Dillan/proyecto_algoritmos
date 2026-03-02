@@ -6,13 +6,15 @@ from database import db
 from models.therapeutic_group import TherapeuticGroup
 from models.laboratory import Laboratory
 from models.product import Product
+from models.user import User  
 
 # Routes
 from routes.therapeutic_group_routes import therapeutic_group_bp
 from routes.product_routes import product_bp
-
-#Laboratory
 from routes.laboratory_routes import laboratory_bp
+
+# 🔐 Auth Blueprint
+from auth.routes.auth_routes import auth_bp  
 
 def create_app():
     app = Flask(__name__)
@@ -24,6 +26,7 @@ def create_app():
     app.register_blueprint(therapeutic_group_bp)
     app.register_blueprint(product_bp)
     app.register_blueprint(laboratory_bp)
+    app.register_blueprint(auth_bp)  
 
     @app.route("/")
     def home():
@@ -36,5 +39,5 @@ app = create_app()
 
 if __name__ == "__main__":
     with app.app_context():
-        db.create_all()
+        db.create_all()  # Crea también la tabla users
     app.run(debug=True)
