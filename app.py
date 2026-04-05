@@ -1,43 +1,41 @@
 from flask import Flask
 from config import Config
-from database import db
+# DB
+from db.db import engine
+from db.models import Base
 
-# Models
-from models.therapeutic_group import TherapeuticGroup
-from models.laboratory import Laboratory
-from models.product import Product
-from models.user import User  
-
-# Routes
-from routes.therapeutic_group_routes import therapeutic_group_bp
-from routes.product_routes import product_bp
-from routes.laboratory_routes import laboratory_bp
-
-# 🔐 Auth Blueprint
-from auth.routes.auth_routes import auth_bp  
+# BLUEPRINTS
+from routes.auth.auth_routes import auth_bp
+from routes.laboratories.laboratories_routes import laboratories_bp
+from routes.products.products_routes import products_bp
+from routes.therapeutic_groups.therapeutic_groups_routes import therapeutic_groups_bp
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    db.init_app(app)
 
-    # Blueprints
-    app.register_blueprint(therapeutic_group_bp)
-    app.register_blueprint(product_bp)
-    app.register_blueprint(laboratory_bp)
-    app.register_blueprint(auth_bp)  
+    from flask_jwt_extended import JWTManager
+    JWTManager(app)
+
+    # 🔗 BLUEPRINTS
+    app.register_blueprint(auth_bp, url_prefix="/auth")
+    app.register_blueprint(laboratories_bp, url_prefix="/laboratory")
+    app.register_blueprint(products_bp, url_prefix="/product")
+    app.register_blueprint(therapeutic_groups_bp, url_prefix="/therapeutic_group")
+
 
     @app.route("/")
     def home():
-        return {"message": "Servidor funcionando correctamente 🚀"}
+        return {"message": "API Vademecum funcionando 🚀"}
 
     return app
 
 
 app = create_app()
 
+
 if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()  # Crea también la tabla users
+    Base.metadata.create_all(bind=engine)
+
     app.run(debug=True)

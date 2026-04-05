@@ -60,24 +60,39 @@ Esta API permite:
 
 | Tabla | Campos |
 |-------|--------|
-| **🏭 laboratory** | `id`, `name`,`products` |
-| **🏥 therapeutic_groups** | `id`, `name`, `mechanism`,`description`,`products` |
-| **💊 products** | `id`, `generic_name`, `commercial_name`, `concentration`, `pharmaceutical_form`,`dosage`,`notes`,`is_active`,`laboratory_id(FK)`, `therapeutic_group_id(FK) `|
+| **🏭 laboratories** | `id (PK)`, `name (unique, not null)`, `products (relación 1:N)` |
+| **🏥 therapeutic_groups** | `id (PK)`, `name (not null)`, `mechanism`, `description`, `products (relación 1:N)` |
+| **💊 products** | `id (PK)`, `generic_name`, `commercial_name`, `concentration`, `pharmaceutical_form`, `dosage`, `notes`, `is_active`, `laboratory_id (FK, not null)`, `therapeutic_group_id (FK, not null)` |
+| **👤 users** | `id (PK)`, `username (unique, not null)`, `password (not null)` |
 
 ## 📂 Estructura del Proyecto
 ```
 proyecto_algoritmos/
-├── app.py
-├── database.py
-├── config.py
+├── __pycache__/
+├── .vscode/
+├── common/
+│   ├── __pycache__/
+│   └── http.py
+├── db/
+│   ├── __pycache__/
+│   ├── db.py
+│   └── models.py
+├── routes/
+│   ├── auth/
+│   ├── laboratories/
+│   ├── products/
+│   └── therapeutic_groups/
+├── static/
+├── templates/
+├── venv/
+├── __init__.py
 ├── .env
 ├── .gitignore
-├── requirements.txt
+├── app.py
+├── config.py
+├── db_init.py
 ├── README.md
-├── models/
-├── routes/
-├── services/
-└── utils/
+└── requirements.txt
 ```
 ### ⚙️ Instalación y Ejecución
 ## 1️⃣ Clonar el repositorio
@@ -115,7 +130,7 @@ from models.products import Product
 from models.therapeutic_groups import TherapeuticGroup
 
 # Crear todas las tablas en la DB
-db.create_all()
+python db_init.py
 print("Tablas creadas correctamente")
 ```
 ### 5️⃣ Ejecutar el servidor
@@ -125,9 +140,66 @@ python app.py
 ### Servidor: http://127.0.0.1:5000
 
 ### 🚀 Uso de la API (Postman)
+
+### Crear usuario 
+```
+
+POST http://127.0.0.1:5000/auth/create
+
+#Body(Json)
+
+{
+  "username": "usuario1",
+  "password": "123456"
+}
+
+#Respuesta 
+
+{
+  "message": "User created successfully"
+}
+
+```
+#Iniciar sesion 
+```
+
+POST http://127.0.0.1:5000/auth/login
+
+#Body(Json)
+
+{
+  "username": "usuario1",
+  "password": "123456"
+}
+
+#Respuesta
+
+{
+  "access_token": "tu_token_jwt"
+}
+
+##Uso de token 
+
+Para poder usar TODOS los endpoints protegidos, debes:
+
+Ir a Postman
+Seleccionar la pestaña Authorization
+En Auth Type, elegir:
+👉 Bearer Token
+En el campo Token, pegar el access_token obtenido en el login
+
+Este token es obligatorio para endpoints como:
+Crear productos
+Crear laboratorios
+Crear grupos terapéuticos
+Actualizar o eliminar datos
+
+Si no envías el token, la API responderá con error de autorización.
+
+
 ## 🔹 Crear Laboratorio
 ```
-POST http://127.0.0.1:5000/laboratories
+POST http://127.0.0.1:5000/laboratory/createLaboratory
 ```
 #Body(Json)
 ```
@@ -146,7 +218,7 @@ POST http://127.0.0.1:5000/laboratories
 ```
 #Actualizacion 
 ```
-PUT http://127.0.0.1:5000/laboratories/<id>
+PUT http://127.0.0.1:5000/laboratory/updateLaboratory/id
 ```
 #Body (JSON)
 ```
@@ -162,7 +234,7 @@ PUT http://127.0.0.1:5000/laboratories/<id>
 ```
 #Eliminar laboratorio
 ```
-DELETE http://127.0.0.1:5000/laboratories/<id>
+DELETE http://127.0.0.1:5000/laboratory/deleteLaboratory/<id>
 ```
 #Respuesta esperada
 ```
@@ -170,22 +242,7 @@ DELETE http://127.0.0.1:5000/laboratories/<id>
   "message": "Laboratory deleted successfully"
 }
 ```
-# Crear grupo terapeutico
-```
-POST http://127.0.0.1:5000/therapeutic-groups
 
-```
-
-#Body(Json)
-```
-{
-  "name": "Analgestics",
-  "mechanism: "Pain relief",
-  "description" : "Diugs used to reduce pain"
-  
-}
-
-```
 #Crear producto
 ```
 POST http://127.0.0.1:5000/products
@@ -195,12 +252,13 @@ POST http://127.0.0.1:5000/products
 ```
 {
   "generic_name": "Paracetamol",
-  "commercial_name": Tylenol,
+  "commercial_name": "Tylenol",
   "concentration": "500 mg",
   "pharmaceutical_form": "Tablet",
-  "dosage": "I tablet every 8h",
-  "hotes": "Take after meals",
-  "is_active" : true,
+  "dosage": "1 tablet every 8h",
+  "notes": "Take after meals",
+  "is_active": true,
+  "therapeutic_group_id": 1,
   "laboratory_id": 1
 }
 
@@ -216,7 +274,7 @@ POST http://127.0.0.1:5000/products
 
 #Obtener productos
 ```
-GET http://127.0.0.1:5000/products
+GET http://127.0.0.1:5000/product/getAll
 
 ```
 
@@ -240,7 +298,7 @@ GET http://127.0.0.1:5000/products
 
 #Actualizar producto
 ```
-PUT http://127.0.0.1:5000/products/<id>
+PUT http://127.0.0.1:5000/product/updateProduct/<id>
 ```
 
 #Body(JSON)
@@ -265,7 +323,7 @@ PUT http://127.0.0.1:5000/products/<id>
 ```
 #Eliminar producto
 ```
-DELETE http://127.0.0.1:5000/products/<id>
+DELETE http://127.0.0.1:5000/product/deleteProduct/<id>
 ```
 #Respuesta
 ```
@@ -276,15 +334,16 @@ DELETE http://127.0.0.1:5000/products/<id>
 ##Therapeutic_groups
 #Crear grupo terapéutico
 ```
- POST http://127.0.0.1:5000/therapeutic-groups
+ POST http://127.0.0.1:5000/therapeutic_group/createTherapeuticGroup
 ```
 
 #Body(JSON)
 ```
 {
-  "name": "Antibiotics",
-  "mechanism": "Bacterial inhibition",
-  "description": "Drugs used to fight infections"
+{
+  "name": "Analgestics",
+  "mechanism": "Pain relief",
+  "description": "Drugs used to reduce pain"
 }
 ```
 #Respuesta
@@ -301,7 +360,7 @@ DELETE http://127.0.0.1:5000/products/<id>
 
 #Obtener grupos terapeuticos
 ```
-GET http://127.0.0.1:5000/therapeutic-groups
+GET http://127.0.0.1:5000/therapeutic_groups/getAll
 ```
 #Respuesta
 ```
@@ -325,7 +384,7 @@ GET http://127.0.0.1:5000/therapeutic-groups
 
 #Actualizar grupo terapeutico
 ```
-PUT http://127.0.0.1:5000/therapeutic-groups/<id>
+PUT http://127.0.0.1:5000/therapeutic_group/updateTherapeuticGroup/1
 ```
 #Body(JSON)
 ```
@@ -350,7 +409,7 @@ PUT http://127.0.0.1:5000/therapeutic-groups/<id>
 ```
 #Eliminar grupo terapeutico
 ```
-DELETE http://127.0.0.1:5000/therapeutic-groups/<id>
+DELETE http://127.0.0.1:5000/therapeutic_group/deleteTherapeuticGroup/<id>
 ```
 #Respuesta 
 ```

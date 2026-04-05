@@ -1,0 +1,51 @@
+:root {
+  --primary: #2E86C1;
+  --secondary: #28B463;
+  --background: #F4F6F7;
+  --text: #ffffff;
+  --accent: #E74C3C;
+}
+
+body {
+  position: relative;
+  margin: 0;
+  height: 100vh;
+
+  background-image: url('/static/fondo.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  font-family: Arial;
+  color: var(--text);
+}
+
+/* capa oscura encima */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* contenido por encima */
+.container {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  margin-top: 150px;
+}
+
+h1 {
+  color: white;
+  font-size: 40px;
+}
+
+button {
+  background-color: var(--primary);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+}
