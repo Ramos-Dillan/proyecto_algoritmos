@@ -76,12 +76,6 @@ class Product(Base):
             "laboratory_id": self.laboratory_id
         }
 
-    laboratory_id = Column(
-        Integer,
-        ForeignKey("laboratories.id"),
-        nullable=False
-    )
-
     # 🔗 Relaciones inversas
     therapeutic_group = relationship("TherapeuticGroup", back_populates="products")
     laboratory = relationship("Laboratory", back_populates="products")

@@ -10,10 +10,15 @@ from routes.laboratories.laboratories_routes import laboratories_bp
 from routes.products.products_routes import products_bp
 from routes.therapeutic_groups.therapeutic_groups_routes import therapeutic_groups_bp
 
+# 👇 IMPORTA flask_cors
+from flask_cors import CORS
+
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
+    # 👉 HABILITA CORS PARA TODO (puedes restringir orígenes si quieres)
+    CORS(app, resources={r"/*": {"origins": "http://localhost:4200"}})
 
     from flask_jwt_extended import JWTManager
     JWTManager(app)
@@ -23,7 +28,6 @@ def create_app():
     app.register_blueprint(laboratories_bp, url_prefix="/laboratory")
     app.register_blueprint(products_bp, url_prefix="/product")
     app.register_blueprint(therapeutic_groups_bp, url_prefix="/therapeutic_group")
-
 
     @app.route("/")
     def home():
