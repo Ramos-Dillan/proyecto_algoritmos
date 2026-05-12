@@ -700,8 +700,10 @@ vitest                    ^4.0.8
 
 ---
 
-## 👨‍💻 Autor
+## 👨‍💻 Autores
 
-**Dillan Ramos Barrera**  
+**Dillan Ramos Barrera** 
+**Santiago Ramirez**  
+**Samith Ramos** 
 Proyecto — Algoritmos  
 Ingeniería Biomédica
