@@ -1,0 +1,121 @@
+.container {
+  padding: 24px;
+  color: #c9d1d9;
+}
+
+.container button {
+  background: linear-gradient(135deg, #2f69a8, #4da3ff);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(77,163,255,0.3);
+  transition: 0.2s;
+}
+
+.container button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(77,163,255,0.45);
+}
+
+.image-section {
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.product-img {
+
+  image-rendering: auto;
+  width: 220px;
+  height: 220px;
+
+  object-fit: contain;
+
+  background: white;
+
+  padding: 10px;
+
+  border-radius: 14px;
+
+  border: 1px solid #30363d;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.35);
+}
+
+.no-image {
+  width: 220px;
+  height: 220px;
+  background: #21262d;
+  border: 1px solid #30363d;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #484f58;
+  font-size: 14px;
+}
+
+.image-edit {
+  display: flex;
+  gap: 8px;
+
+  input {
+    width: 300px;
+    padding: 8px 12px;
+    border: 1px solid #3c4043;
+    border-radius: 6px;
+    background: #202124 !important;
+    color: #e8eaed;
+    font-size: 14px;
+    transition:
+      border-color 0.2s ease,
+      background 0.2s ease,
+      box-shadow 0.2s ease;
+    -webkit-box-shadow: 0 0 0px 1000px #202124 inset !important;
+    -webkit-text-fill-color: #e8eaed !important;
+
+    &::placeholder {
+      color: #5f6368;
+    }
+
+    &:hover:not(:focus) {
+      border-color: #5f6368;
+      background: #292a2d !important;
+      -webkit-box-shadow: 0 0 0px 1000px #292a2d inset !important;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: #8ab4f8;
+      background: #202124 !important;
+      -webkit-box-shadow: 0 0 0px 1000px #202124 inset !important;
+      box-shadow: 0 0 0 2px rgba(138, 180, 248, 0.25);
+    }
+  }
+}
+
+h2 {
+  color: #e6edf3;
+  font-size: 22px;
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+
+p {
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #8b949e;
+  line-height: 1.6;
+
+  strong {
+    color: #58a6ff;
+    font-weight: 600;
+  }
+}

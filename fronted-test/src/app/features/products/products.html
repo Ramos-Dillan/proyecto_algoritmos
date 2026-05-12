@@ -1,0 +1,128 @@
+<div class="container">
+  <h1>Productos</h1>
+
+  <div style="display:flex; gap:10px; margin-bottom:20px;">
+    <input
+      type="text"
+      placeholder="Buscar producto..."
+      [(ngModel)]="searchText"
+      (keyup.enter)="doFilter()"
+      class="search-input"
+    />
+    <button class="btn-edit" (click)="doFilter()">Buscar</button>
+    <button class="btn-edit" style="background:#636e72;" (click)="getProducts()">Limpiar</button>
+  </div>
+
+  <p *ngIf="loading" style="color:#e6edf3;">Cargando...</p>
+  <p *ngIf="errorMessage" style="color:red;">{{ errorMessage }}</p>
+
+  <div class="table-wrapper">
+    <table *ngIf="!loading && products.length > 0" class="products-table">
+      <thead>
+        <tr>
+          <th>Imagen</th>
+          <th>ID</th>
+          <th>Genérico</th>
+          <th>Comercial</th>
+          <th>Concentración</th>
+          <th>Forma</th>
+          <th>Dosificación</th>
+          <th>Notas</th>
+          <th>Estado</th>
+          <th>Grupo Terapéutico</th>
+          <th>Laboratorio</th>
+          <th>Categoría</th>
+          <th class="actions-col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of products; trackBy: trackByProductId">
+          <td>
+            <img
+              *ngIf="p.image_url; else noImg"
+              [src]="p.image_url"
+              class="thumb"
+              alt="img"
+              (click)="verDetalle.emit(p.id)"
+              style="cursor:pointer;"
+            />
+            <ng-template #noImg>-</ng-template>
+          </td>
+          <td>{{ p.id }}</td>
+          <td>{{ p.generic_name }}</td>
+          <td>{{ p.commercial_name }}</td>
+          <td>{{ p.concentration }}</td>
+          <td>{{ p.pharmaceutical_form }}</td>
+          <td>{{ p.dosage || '-' }}</td>
+          <td>{{ p.notes || '-' }}</td>
+          <td>
+            <span [style.color]="p.is_active ? '#00b894' : '#d63031'" style="font-weight:600;">
+              {{ p.is_active ? 'Activo' : 'Inactivo' }}
+            </span>
+          </td>
+          <td>{{ p.therapeutic_group || '-' }}</td>
+          <td class="lab-col">{{ p.laboratory }}</td>
+          <td>{{ p.category || '-' }}</td>
+          <td *ngIf="isAdmin" class="actions-col">
+            <div class="actions-cell">
+              <button class="btn-edit" (click)="openEdit(p)">✏️ Editar</button>
+              <button
+                class="btn-toggle"
+                [class.btn-deactivate]="p.is_active"
+                [class.btn-activate]="!p.is_active"
+                (click)="toggleActive(p)"
+              >
+                {{ p.is_active ? '🔴 Desactivar' : '🟢 Activar' }}
+              </button>
+            </div>
+          </td>
+          <td *ngIf="isViewer" class="actions-col">
+            <div class="actions-cell">
+              <button class="btn-edit" (click)="openEdit(p)">✏️ Editar</button>
+            </div>
+          </td>
+          <td *ngIf="!isAdmin && !isViewer" class="actions-col"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p *ngIf="!loading && products.length === 0" style="color:#e6edf3;">No se encontraron productos.</p>
+</div>
+
+<!-- MODAL DE EDICIÓN -->
+<div class="modal-overlay" *ngIf="editingProduct" (click)="closeEdit()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <h3>Editar Producto</h3>
+    <div class="form-group">
+      <label>Nombre Genérico</label>
+      <input type="text" [(ngModel)]="editForm.generic_name" />
+    </div>
+    <div class="form-group">
+      <label>Nombre Comercial</label>
+      <input type="text" [(ngModel)]="editForm.commercial_name" />
+    </div>
+    <div class="form-group">
+      <label>Concentración</label>
+      <input type="text" [(ngModel)]="editForm.concentration" />
+    </div>
+    <div class="form-group">
+      <label>Forma Farmacéutica</label>
+      <input type="text" [(ngModel)]="editForm.pharmaceutical_form" />
+    </div>
+    <div class="form-group">
+      <label>Dosificación</label>
+      <input type="text" [(ngModel)]="editForm.dosage" />
+    </div>
+    <div class="form-group">
+      <label>Notas</label>
+      <textarea [(ngModel)]="editForm.notes"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-save" (click)="saveEdit()" [disabled]="saving">
+        {{ saving ? 'Guardando...' : '💾 Guardar' }}
+      </button>
+      <button class="btn-cancel" (click)="closeEdit()">Cancelar</button>
+    </div>
+  </div>
+</div>

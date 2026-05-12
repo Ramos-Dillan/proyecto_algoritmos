@@ -1,0 +1,50 @@
+.container {
+  padding: 20px;
+}
+
+h1 {
+  margin-bottom: 20px;
+  color: #2f3640;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+th {
+  background: #2f3640;
+  color: white;
+  padding: 12px;
+  text-align: left;
+}
+
+td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+tr:hover {
+  background: #f5f6fa;
+}
+
+/* 🔥 ESTILO CATEGORÍA */
+.category-name {
+  color: #27ae60;
+  font-weight: 600;
+}
+
+/* 🔥 VACÍO */
+.empty {
+  padding: 20px;
+  text-align: center;
+  color: #888;
+}

@@ -1,0 +1,66 @@
+shell.html:
+<div class="layout">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+
+    <div class="left">
+      <button class="menu-btn" (click)="toggleSidebar()">☰</button>
+      <img src="assets/logo.png" class="logo">
+    </div>
+
+    <div class="center">
+      <h2>HOME</h2>
+    </div>
+
+    <div class="right">
+      <div class="user" (click)="toggleDropdown()">
+        <div class="avatar">U</div>
+        <span>Full Name</span>
+
+        <div class="dropdown" *ngIf="isDropdownOpen">
+          <button (click)="logout()">Cerrar sesión</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar" [class.closed]="isSidebarClosed">
+      <ul>
+
+        <li routerLink="/home" routerLinkActive="active">
+          <span class="icon">🏠</span>
+          <span class="text">Home</span>
+        </li>
+
+        <li routerLink="/products" routerLinkActive="active">
+          <span class="icon">📦</span>
+          <span class="text">Products</span>
+        </li>
+
+        <li routerLink="/users" routerLinkActive="active">
+          <span class="icon">👤</span>
+          <span class="text">Users</span>
+        </li>
+
+        <li routerLink="/therapeutic-groups" routerLinkActive="active">
+          <span class="icon">💊</span>
+          <span class="text">Groups</span>
+        </li>
+
+      </ul>
+    </div>
+
+    <!-- CONTENIDO -->
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,310 @@
+.page {
+  padding: 20px;
+  color: #c9d1d9;
+}
+
+h1 {
+  margin-bottom: 20px;
+  color: #e6edf3;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+/* CONTENEDOR */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* TABLA */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #161b22;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.5);
+  border: 1px solid #30363d;
+  table-layout: fixed;
+}
+
+/* DISTRIBUCIÓN — 7 columnas con acciones más anchas para 3 botones */
+th:nth-child(1),
+td:nth-child(1) {
+  width: 
+  4%;
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+  width: 10%;
+}
+
+th:nth-child(3),
+td:nth-child(3) {
+  width: 10%;
+}
+
+th:nth-child(4),
+td:nth-child(4) {
+  width: 8%;
+}
+
+th:nth-child(5),
+td:nth-child(5) {
+  width: 8%;
+}
+
+th:nth-child(6),
+td:nth-child(6) {
+  width: 10%;
+}
+
+th:nth-child(7),
+td:nth-child(7) {
+  width: 32%;
+}
+
+/* HEADERS */
+th {
+  background: #0d1117;
+  color: #58a6ff;
+  padding: 14px 12px;
+  font-size: 13px;
+  border-bottom: 1px solid #30363d;
+  text-align: center;
+}
+
+/* ALINEACIÓN IZQUIERDA HEADERS USERNAME Y EMAIL */
+th:nth-child(2),
+th:nth-child(3) {
+  text-align: left;
+}
+
+/* CELDAS */
+td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #21262d;
+  font-size: 13px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* TEXTO IZQUIERDA */
+td:nth-child(2),
+td:nth-child(3) {
+  text-align: left;
+}
+
+/* HOVER */
+tr:hover td {
+  background: #1c2128;
+}
+
+/* ESTADO */
+.status {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status.active {
+  background: rgba(0, 184, 148, 0.15);
+  color: #3fb950;
+}
+
+.status.inactive {
+  background: rgba(214, 48, 49, 0.15);
+  color: #f85149;
+}
+
+/* ACCIONES CENTRADAS */
+.actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* BOTONES IGUALES */
+.btn-edit,
+.btn-toggle,
+.btn-delete {
+  width: 90px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+  padding: 0;
+}
+
+/* EDIT */
+.btn-edit {
+  background: linear-gradient(135deg, #2f69a8, #4da3ff);
+  color: white;
+  border: none;
+}
+
+.btn-edit:hover {
+  transform: translateY(-1px);
+}
+
+/* TOGGLE */
+.btn-toggle {
+  border: 1px solid transparent;
+}
+
+.btn-deactivate {
+  background: rgba(214, 48, 49, 0.15);
+  color: #f85149;
+  border: 1px solid rgba(214, 48, 49, 0.4);
+}
+
+.btn-activate {
+  background: rgba(0, 184, 148, 0.15);
+  color: #3fb950;
+  border: 1px solid rgba(0, 184, 148, 0.4);
+}
+
+/* DELETE */
+.btn-delete {
+  background: rgba(255, 0, 0, 0.12);
+  color: #ff6b6b;
+  border: 1px solid rgba(255, 0, 0, 0.3);
+}
+
+.btn-delete:hover {
+  background: rgba(255, 0, 0, 0.2);
+  transform: translateY(-1px);
+}
+
+/* ERROR */
+.error-msg {
+  color: #f85149;
+  margin-bottom: 10px;
+}
+
+/* MODAL */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.modal {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 12px;
+  padding: 24px;
+  width: 500px;
+  max-width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+
+  h3 {
+    margin-bottom: 20px;
+    color: #e6edf3;
+    font-size: 18px;
+  }
+}
+
+.form-group {
+  margin-bottom: 14px;
+
+  label {
+    display: block;
+    font-size: 13px;
+    color: #8b949e;
+    margin-bottom: 4px;
+  }
+
+  input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #3c4043;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+    font-family: inherit;
+    background: #202124 !important;
+    color: #e8eaed;
+    transition: 0.2s;
+    -webkit-box-shadow: 0 0 0px 1000px #202124 inset !important;
+    -webkit-text-fill-color: #e8eaed !important;
+  }
+
+  input:hover:not(:focus) {
+    border-color: #5f6368;
+    background: #292a2d !important;
+    -webkit-box-shadow: 0 0 0px 1000px #292a2d inset !important;
+  }
+
+  input:focus {
+    outline: none;
+    border-color: #8ab4f8;
+    background: #202124 !important;
+    -webkit-box-shadow: 0 0 0px 1000px #202124 inset !important;
+    box-shadow: 0 0 0 2px rgba(138, 180, 248, 0.25);
+  }
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+
+  .btn-save {
+    background: linear-gradient(135deg, #2f69a8, #4da3ff);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(77, 163, 255, 0.3);
+    transition: 0.2s;
+
+    &:hover {
+      box-shadow: 0 6px 16px rgba(77, 163, 255, 0.45);
+      transform: translateY(-1px);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  .btn-cancel {
+    background: #21262d;
+    color: #8b949e;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+
+    &:hover {
+      background: #30363d;
+      color: #e6edf3;
+    }
+  }
+}

@@ -1,0 +1,83 @@
+<div class="auth-form-content">
+  <div class="card-header">
+    <div class="logo">
+      <img src="/assets/logo.png" alt="logo">
+    </div>
+
+    <h1>Iniciar Sesión</h1>
+
+    <span class="system-subtitle">
+      Acceso seguro al sistema farmacéutico
+    </span>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <div class="input-group">
+      <label>Email</label>
+
+      <div class="input-icon">
+        <input
+          type="email"
+          formControlName="email"
+          placeholder="usuario@ejemplo.com"
+          autocomplete="username"
+        >
+
+        <i class="fas fa-user"></i>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label>Password</label>
+
+      <div class="input-icon">
+        <input
+          type="password"
+          formControlName="password"
+          placeholder="••••••••••••••"
+          autocomplete="current-password"
+        >
+
+        <i class="fas fa-lock"></i>
+      </div>
+    </div>
+
+    <div class="forgot-wrapper">
+      <a routerLink="/forgot-password" class="forgot-link">
+        ¿Olvidaste tu contraseña?
+      </a>
+    </div>
+
+    <button type="submit" [disabled]="loading">
+      {{ loading ? 'Ingresando...' : 'Login' }}
+    </button>
+
+    <p *ngIf="errorMsg" class="error">
+      {{ errorMsg }}
+    </p>
+
+    <div class="social-separator">
+      <span>o inicia con</span>
+    </div>
+
+    <div class="social-buttons">
+      <button type="button" class="social-btn" aria-label="Google">
+        <span>G</span>
+      </button>
+
+      <button type="button" class="social-btn" aria-label="Facebook">
+        <span>f</span>
+      </button>
+
+      <button type="button" class="social-btn" aria-label="GitHub">
+        <span>GH</span>
+      </button>
+
+      <button type="button" class="social-btn" aria-label="LinkedIn">
+        <span>in</span>
+      </button>
+    </div>
+
+  </form>
+</div>

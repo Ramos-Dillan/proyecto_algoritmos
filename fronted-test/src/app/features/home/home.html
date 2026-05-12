@@ -1,0 +1,287 @@
+<div class="home-container">
+
+  <header class="topbar">
+    <div class="left">
+      <img src="assets/logo-ces.png" class="logo" alt="logo">
+      <button type="button" class="menu-btn" (click)="toggleMenu()">☰</button>
+    </div>
+
+    <div class="center">
+      <h2>BIENVENIDO</h2>
+    </div>
+
+    <div class="right">
+      <div class="user" (click)="toggleUserMenu()">
+        <span class="name">{{ userName }}</span>
+        <small style="margin-left:10px; color: gray;">({{ userRole }})</small>
+        <div class="avatar">👤</div>
+        <div class="dropdown" *ngIf="showUserMenu">
+          <button type="button" (click)="editar()">
+            <span class="icon">✏️</span>
+            <span class="text">Editar</span>
+          </button>
+          <button type="button" (click)="logout()">
+            <span class="icon">🚪</span>
+            <span class="text">Cerrar sesión</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="main">
+    <aside class="sidebar" [class.closed]="!menuOpen">
+      <ul>
+        <li (click)="cambiarVista($event, 'home')" [class.active]="vista === 'home'">
+          <span class="icon">🏠</span>
+          <span class="text">Home</span>
+        </li>
+        <li
+          *ngIf="userRole === 'admin' || userRole === 'medico' || userRole === 'estudiante'"
+          (click)="cambiarVista($event, 'products')"
+          [class.active]="vista === 'products' || vista === 'product-detail'">
+          <span class="icon">📦</span>
+          <span class="text">Productos</span>
+        </li>
+        <li
+          *ngIf="userRole === 'admin'"
+          (click)="cambiarVista($event, 'users')"
+          [class.active]="vista === 'users'">
+          <span class="icon">👤</span>
+          <span class="text">Usuarios</span>
+        </li>
+        <li
+          *ngIf="userRole === 'admin' || userRole === 'estudiante'"
+          (click)="cambiarVista($event, 'dashboard')"
+          [class.active]="vista === 'dashboard'">
+          <span class="icon">📊</span>
+          <span class="text">Dashboard</span>
+        </li>
+      </ul>
+    </aside>
+
+    <div class="content">
+      <div [hidden]="vista !== 'home'">
+
+        <div class="section-label">Arquitectura del sistema</div>
+        <div class="top-layout">
+
+          <!-- VADEMECUM -->
+          <div class="db-section">
+            <div class="db-logo-col">
+              <div class="db-logo-wrap">
+                <img src="assets/logo.png" alt="Vademécum" class="db-logo-anim">
+                <div class="hero-logo-ring ring1"></div>
+                <div class="hero-logo-ring ring2"></div>
+              </div>
+            </div>
+            <div class="db-info-col">
+              <span class="db-badge">Base de datos relacional</span>
+              <h2>Sistema de Gestión Farmacéutica —<br><span class="db-title-accent">Vademécum CES</span></h2>
+              <p>
+                Construida sobre una arquitectura relacional sólida que garantiza la integridad,
+                consistencia y disponibilidad de toda la información clínica y farmacéutica.
+                Cada entidad está cuidadosamente modelada para reflejar la realidad del negocio.
+              </p>
+              <div class="db-tags-row">
+                <span class="db-tag">🧬 Productos</span>
+                <span class="db-tag">🏭 Laboratorios</span>
+                <span class="db-tag">🗂️ Categorías</span>
+                <span class="db-tag">💉 Grupos Terapéuticos</span>
+                <span class="db-tag">👤 Usuarios & Roles</span>
+              </div>
+              <ul class="db-features-list">
+                <li>✔ Integridad referencial entre productos, categorías y movimientos</li>
+                <li>✔ Control de acceso granular por roles (admin, médico, estudiante)</li>
+                <li>✔ Registro de auditoría y trazabilidad completa de cambios</li>
+                <li>✔ API RESTful con autenticación JWT y endpoints protegidos</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- HERO -->
+          <div class="hero-main">
+            <div class="hero-main-left">
+              <div class="hero-tag">💊 Plataforma Farmacéutica Inteligente</div>
+              <h1 class="hero-title">
+                Gestión de Medicamentos<br>
+                <span class="hero-title-accent">de nueva generación</span>
+              </h1>
+              <p class="hero-desc">
+                Centraliza, controla y optimiza toda la información farmacéutica de tu institución
+                en una sola plataforma segura, trazable y diseñada para entornos clínicos reales.
+              </p>
+              <div class="hero-actions">
+                <button class="cta-primary" (click)="cambiarVista($event, 'products')">
+                  Explorar productos →
+                </button>
+                <button class="cta-secondary" (click)="cambiarVista($event, 'dashboard')">
+                  Ver dashboard
+                </button>
+              </div>
+              <div class="hero-pills">
+                <span class="pill">✔ Acceso por roles</span>
+                <span class="pill">✔ Trazabilidad completa</span>
+                <span class="pill">✔ Tiempo real</span>
+              </div>
+            </div>
+            <div class="hero-main-right">
+              <img src="assets/base.png" alt="Base de datos" class="hero-db-img">
+            </div>
+          </div>
+
+        </div>
+
+        <div class="section-label">¿Qué incluye la plataforma?</div>
+        <div class="features">
+          <div class="feature">
+            <div class="feature-icon-wrap">
+              <span class="feature-icon">📦</span>
+            </div>
+            <h3>Gestión de Productos</h3>
+            <p>
+              Registra y administra medicamentos con nombre genérico, comercial,
+              concentración, forma farmacéutica, laboratorio y categoría terapéutica.
+            </p>
+            <div class="feature-tag">Inventario · Categorías · Laboratorios</div>
+          </div>
+
+          <div class="feature">
+            <div class="feature-icon-wrap">
+              <span class="feature-icon">👥</span>
+            </div>
+            <h3>Control de Usuarios</h3>
+            <p>
+              Gestiona roles diferenciados: administradores con control total, médicos con
+              acceso clínico y estudiantes con vista de consulta.
+            </p>
+            <div class="feature-tag">Admin · Médico · Estudiante</div>
+          </div>
+
+          <div class="feature">
+            <div class="feature-icon-wrap">
+              <span class="feature-icon">📊</span>
+            </div>
+            <h3>Dashboard Inteligente</h3>
+            <p>
+              Visualiza estadísticas en tiempo real: productos por categoría, grupos terapéuticos,
+              laboratorios y estado del inventario.
+            </p>
+            <div class="feature-tag">Gráficas · Estadísticas · Reportes</div>
+          </div>
+
+          <div class="feature">
+            <div class="feature-icon-wrap">
+              <span class="feature-icon">🔒</span>
+            </div>
+            <h3>Seguridad y Trazabilidad</h3>
+            <p>
+              Autenticación segura con JWT, control de acceso granular por rol y registro de todas
+              las operaciones realizadas sobre el sistema.
+            </p>
+            <div class="feature-tag">JWT · Auditoría · Encriptación</div>
+          </div>
+        </div>
+
+        <div class="section-label">¿Por qué elegir esta plataforma?</div>
+        <div class="why-grid">
+          <div class="why-card">
+            <span class="why-icon">⚡</span>
+            <div>
+              <h4>Rápida y eficiente</h4>
+              <p>Búsqueda instantánea, filtros avanzados y navegación fluida entre módulos sin recargar la página.</p>
+            </div>
+          </div>
+
+          <div class="why-card">
+            <span class="why-icon">🏥</span>
+            <div>
+              <h4>Diseñada para clínicas</h4>
+              <p>Adaptada a flujos de trabajo reales en entornos de salud, con campos específicos del sector farmacéutico.</p>
+            </div>
+          </div>
+
+          <div class="why-card">
+            <span class="why-icon">🗄️</span>
+            <div>
+              <h4>Base de datos robusta</h4>
+              <p>Relaciones estructuradas entre productos, categorías, laboratorios y grupos terapéuticos con integridad referencial.</p>
+            </div>
+          </div>
+
+          <div class="why-card">
+            <span class="why-icon">🌐</span>
+            <div>
+              <h4>Acceso centralizado</h4>
+              <p>Un solo punto de acceso para toda la información farmacéutica institucional, disponible desde cualquier dispositivo.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div *ngIf="vista === 'products' || vista === 'product-detail'">
+        <app-products
+          *ngIf="vista === 'products'"
+          (verDetalle)="verDetalleProducto($event)">
+        </app-products>
+        <app-product-detail
+          *ngIf="vista === 'product-detail' && selectedProductId"
+          [productId]="selectedProductId"
+          (volver)="volverAProductos()">
+        </app-product-detail>
+      </div>
+
+      <div [hidden]="vista !== 'users'">
+        <app-users [refresh]="refreshUsers"></app-users>
+      </div>
+
+      <div [hidden]="vista !== 'dashboard'">
+        <app-dashboard [refresh]="refreshDashboard"></app-dashboard>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL EDITAR PERFIL -->
+  <div class="modal-overlay" *ngIf="showEditModal" (click)="closeEditModal()">
+    <div class="modal-box" (click)="$event.stopPropagation()">
+
+      <div class="modal-header">
+        <h3>Editar perfil</h3>
+        <button class="modal-close" (click)="closeEditModal()">✕</button>
+      </div>
+
+      <div class="modal-body">
+
+        <div class="modal-field">
+  <label>Usuario</label>
+  <input type="text" [(ngModel)]="editForm.username" placeholder="Nombre de usuario" autocomplete="off" />
+</div>
+
+<div class="modal-field">
+  <label>Correo</label>
+  <input type="email" [(ngModel)]="editForm.email" placeholder="Correo electrónico" autocomplete="off" />
+</div>
+
+<div class="modal-field">
+  <label>Nueva contraseña <span class="optional">(opcional)</span></label>
+  <input type="password" [(ngModel)]="editForm.password" placeholder="Dejar vacío para no cambiar" autocomplete="new-password" />
+</div>
+
+        <div class="modal-error" *ngIf="editError">{{ editError }}</div>
+        <div class="modal-success" *ngIf="editSuccess">{{ editSuccess }}</div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-cancel" (click)="closeEditModal()">Cancelar</button>
+        <button class="btn-save" (click)="saveEdit()" [disabled]="editSaving">
+          {{ editSaving ? 'Guardando...' : 'Guardar cambios' }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>

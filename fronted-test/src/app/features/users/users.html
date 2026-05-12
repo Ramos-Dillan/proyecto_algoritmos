@@ -1,0 +1,112 @@
+<div class="page">
+
+  <div *ngIf="loading">
+    <p style="color:#e6edf3;">Cargando...</p>
+  </div>
+
+  <ng-container *ngIf="!loading">
+
+    <h1>Usuarios</h1>
+
+    <p *ngIf="errorMsg" class="error-msg">{{ errorMsg }}</p>
+
+    <div *ngIf="users.length > 0" class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Identificación</th>
+            <th>Rol</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let u of users">
+            <td>{{ u.id }}</td>
+            <td>{{ u.username }}</td>
+            <td>{{ u.email }}</td>
+            <td>{{ u.identification }}</td>
+            <td>{{ u.role || '-' }}</td>
+
+            <td>
+              <span
+                class="status"
+                [class.active]="u.is_active"
+                [class.inactive]="!u.is_active"
+              >
+                {{ u.is_active ? 'Activo' : 'Inactivo' }}
+              </span>
+            </td>
+
+            <td>
+              <div class="actions">
+                <button class="btn-edit" (click)="openEdit(u)">
+                  ✏️ Editar
+                </button>
+
+                <button
+                  class="btn-toggle"
+                  [class.btn-deactivate]="u.is_active"
+                  [class.btn-activate]="!u.is_active"
+                  (click)="toggleActive(u)"
+                >
+                  {{ u.is_active ? '🔴 Desactivar' : '🟢 Activar' }}
+                </button>
+
+                <button class="btn-delete" (click)="deleteUser(u)">
+                  🗑️ Eliminar
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p *ngIf="users.length === 0 && !errorMsg" style="color:#e6edf3;">
+      No hay usuarios disponibles
+    </p>
+
+  </ng-container>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" *ngIf="editingUser" (click)="closeEdit()">
+  <div class="modal" (click)="$event.stopPropagation()">
+
+    <h3>Editar Usuario</h3>
+
+    <div class="form-group">
+      <label>Username</label>
+      <input type="text" [(ngModel)]="editForm.username" />
+    </div>
+
+    <div class="form-group">
+      <label>Email</label>
+      <input type="text" [(ngModel)]="editForm.email" />
+    </div>
+
+    <div class="form-group">
+      <label>Identificación</label>
+      <input type="text" [(ngModel)]="editForm.identification" />
+    </div>
+
+    <div class="form-group">
+      <label>Rol</label>
+      <input type="text" [(ngModel)]="editForm.role" />
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-save" (click)="saveEdit()" [disabled]="saving">
+        {{ saving ? 'Guardando...' : '💾 Guardar' }}
+      </button>
+      <button class="btn-cancel" (click)="closeEdit()">Cancelar</button>
+    </div>
+
+  </div>
+</div>

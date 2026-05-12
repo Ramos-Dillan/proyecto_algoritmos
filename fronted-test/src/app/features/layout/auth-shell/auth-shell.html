@@ -1,0 +1,101 @@
+<div class="auth-page">
+
+  <div
+    class="auth-container"
+    [class.show-register]="showRegister"
+  >
+
+    <div class="auth-panel">
+
+      <!-- LOGIN PANEL -->
+      <div
+        class="auth-panel-content"
+        *ngIf="!showRegister; else backPanel"
+      >
+
+        <div class="university-side">
+          <img
+            src="/assets/logo-ces.png"
+            alt="Universidad CES"
+            class="university-logo"
+          >
+        </div>
+
+        <h2 class="welcome-text">
+          Plataforma Académica<br>Farmacéutica
+        </h2>
+
+        <p class="welcome-subtext">
+          Crea una cuenta para acceder a la base de datos farmacéutica
+        </p>
+
+        <button
+          type="button"
+          class="ghost-btn"
+          (click)="togglePanel()"
+        >
+          Registrarse
+        </button>
+
+      </div>
+
+      <!-- REGISTER PANEL -->
+      <ng-template #backPanel>
+
+        <div class="auth-panel-content">
+
+          <div class="university-side">
+            <img
+              src="/assets/logo-ces.png"
+              alt="Universidad CES"
+              class="university-logo"
+            >
+          </div>
+
+          <h2 class="welcome-text">
+            Bienvenido<br>nuevamente
+          </h2>
+
+          <p class="welcome-subtext">
+            Inicia sesión para acceder al sistema farmacéutico
+          </p>
+
+          <button
+            type="button"
+            class="ghost-btn"
+            (click)="togglePanel()"
+          >
+            Iniciar sesión
+          </button>
+
+        </div>
+
+      </ng-template>
+
+    </div>
+
+    <div class="auth-form-box">
+
+      <div
+        class="form-layer login-layer"
+        [class.visible]="!showRegister"
+      >
+        <app-login
+          (goRegister)="showRegister = true"
+        ></app-login>
+      </div>
+
+      <div
+        class="form-layer register-layer"
+        [class.visible]="showRegister"
+      >
+        <app-register
+          (goLogin)="showRegister = false"
+        ></app-register>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

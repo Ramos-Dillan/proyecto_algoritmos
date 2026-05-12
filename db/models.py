@@ -1,5 +1,5 @@
 from db.db import Base
-from sqlalchemy import Column, Integer, String, Text, Boolean, ForeignKey
+from sqlalchemy import Column, Integer, String, Text, Boolean, ForeignKey,DateTime
 from sqlalchemy.orm import relationship
 
 
@@ -36,6 +36,25 @@ class TherapeuticGroup(Base):
             "description": self.description
         }
 
+
+# =========================
+# 🗂️ CATEGORY
+# =========================
+class Category(Base):
+    __tablename__ = "categories"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(150), nullable=False, unique=True)
+
+    products = relationship("Product", back_populates="category")
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name
+        }
+
+
 # =========================
 # 📦 PRODUCT
 # =========================
@@ -50,7 +69,9 @@ class Product(Base):
     dosage = Column(Text)
     notes = Column(Text)
     is_active = Column(Boolean, default=True)
+    image_url = Column(String(500), nullable=True)  # ✅ nuevo
 
+    # 🔗 RELACIONES
     therapeutic_group_id = Column(
         Integer,
         ForeignKey("therapeutic_groups.id"),
@@ -62,6 +83,18 @@ class Product(Base):
         ForeignKey("laboratories.id"),
         nullable=False
     )
+
+    category_id = Column(
+        Integer,
+        ForeignKey("categories.id"),
+        nullable=False
+    )
+
+    # 🔗 ORM RELATIONSHIPS
+    therapeutic_group = relationship("TherapeuticGroup", back_populates="products")
+    laboratory = relationship("Laboratory", back_populates="products")
+    category = relationship("Category", back_populates="products")
+
     def to_dict(self):
         return {
             "id": self.id,
@@ -72,13 +105,12 @@ class Product(Base):
             "dosage": self.dosage,
             "notes": self.notes,
             "is_active": self.is_active,
-            "therapeutic_group_id": self.therapeutic_group_id,
-            "laboratory_id": self.laboratory_id
-        }
+            "image_url": self.image_url,  # ✅ nuevo
 
-    # 🔗 Relaciones inversas
-    therapeutic_group = relationship("TherapeuticGroup", back_populates="products")
-    laboratory = relationship("Laboratory", back_populates="products")
+            "therapeutic_group": self.therapeutic_group.name if self.therapeutic_group else None,
+            "laboratory": self.laboratory.name if self.laboratory else None,
+            "category": self.category.name if self.category else None
+        }
 
 
 # =========================
@@ -87,6 +119,36 @@ class Product(Base):
 class User(Base):
     __tablename__ = "users"
 
-    id = Column(Integer, primary_key=True)
-    username = Column(String(100), unique=True, nullable=False)
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String(100), nullable=False)
+    email = Column(String(150), unique=True, nullable=False)
+    identification = Column(String(50), unique=True, nullable=False)
     password = Column(String(255), nullable=False)
+    reset_token = Column(String(255), nullable=True, index=True)
+    reset_token_expires = Column(DateTime, nullable=True)
+
+    role_id = Column(Integer, ForeignKey("roles.id"), nullable=False)
+    role = relationship("Role", back_populates="users")
+
+    is_active = Column(Boolean, default=True)
+    
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "username": self.username,
+            "email": self.email,
+            "identification": self.identification,
+            "role": self.role.name if self.role else None
+        }
+
+
+# =========================
+# 👤 ROLE
+# =========================
+class Role(Base):
+    __tablename__ = "roles"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(50), unique=True, nullable=False)
+
+    users = relationship("User", back_populates="role")

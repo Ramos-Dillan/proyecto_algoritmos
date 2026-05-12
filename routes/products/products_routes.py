@@ -9,6 +9,17 @@ products_bp = Blueprint("products_bp", __name__)
 def getAll():
     return products_controller.getAll()
 
+@products_bp.route("/get/<int:id>", methods=["GET"])
+@jwt_required()
+def getById(id):
+    return products_controller.getById(id)
+
+@products_bp.route("/filter", methods=["GET"])
+@jwt_required()
+def filterProducts():
+    params = request.args.to_dict()
+    return products_controller.filter(params)
+
 @products_bp.route("/createProduct", methods=["POST"])
 @jwt_required()
 def createProduct():
@@ -25,3 +36,9 @@ def deleteProduct(id):
 def updateProduct(id):
     data = request.get_json()
     return products_controller.updateProduct(id, data)
+
+@products_bp.route("/toggleActive/<int:id>", methods=["PATCH"])
+@jwt_required()
+def toggleActive(id):
+    data = request.get_json()
+    return products_controller.toggleActive(id, data)

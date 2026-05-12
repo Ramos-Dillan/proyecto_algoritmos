@@ -1,0 +1,321 @@
+* {
+  box-sizing: border-box;
+}
+
+:host {
+  display: block;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.auth-page {
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 30px;
+
+  background: url('/assets/fondo.png') no-repeat center center;
+  background-size: cover;
+
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(3px);
+
+  pointer-events: none;
+}
+
+.auth-container {
+  width: min(1180px, 100%);
+  min-height: 660px;
+
+  display: flex;
+
+  position: relative;
+  overflow: hidden;
+
+  border-radius: 30px;
+
+  background: rgba(9, 14, 25, 0.92);
+
+  border: 1px solid rgba(88, 166, 255, 0.12);
+
+  box-shadow:
+    0 25px 80px rgba(0, 0, 0, 0.65),
+    0 0 60px rgba(37, 99, 235, 0.08);
+
+  z-index: 2;
+}
+
+/* PANEL */
+.auth-panel {
+  width: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;      /* ← CAMBIO: era center */
+
+  padding: 42px;
+  padding-top: 56px;            /* ← CAMBIO: controla qué tan arriba queda */
+
+  position: relative;
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      160deg,
+      rgba(8, 56, 70, 0.96) 0%,
+      rgba(4, 30, 40, 0.98) 55%,
+      rgba(2, 15, 24, 1) 100%
+    );
+
+  z-index: 4;
+
+  transition:
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.auth-container.show-register .auth-panel {
+  transform: translateX(100%);
+}
+
+/* IMAGEN DNA */
+.auth-panel::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    url('/assets/dna.png') no-repeat left bottom;
+
+  background-size: cover;
+
+  opacity: 0.28;
+
+  mix-blend-mode: screen;
+
+  pointer-events: none;
+
+  z-index: 0;
+}
+
+.auth-panel-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #e6edf3;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 0;
+}
+
+/* LOGO UNIVERSIDAD */
+
+.university-side {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.university-logo {
+  width: 65%;
+  max-width: 260px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 18px rgba(255,255,255,0.12));
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.university-logo:hover {
+  transform: scale(1.02);
+
+  filter:
+    drop-shadow(0 0 22px rgba(255,255,255,0.18));
+}
+
+.welcome-text {
+  margin: 0 0 12px;
+  font-size: 30px;
+  line-height: 1.15;
+  color: #ffffff;
+  text-align: center;
+  letter-spacing: -0.02em;
+  max-width: 340px;
+}
+
+.welcome-subtext {
+  margin: 0 0 28px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(230,237,243,0.82);
+  text-align: center;
+  max-width: 280px;
+}
+
+/* BOTÓN */
+.ghost-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  min-width: 170px;
+
+  padding: 13px 24px;
+
+  border-radius: 999px;
+
+  border: 1px solid rgba(230,237,243,0.85);
+
+  background: transparent;
+
+  color: #e6edf3;
+
+  cursor: pointer;
+
+  font-weight: 700;
+
+  transition: 0.25s ease;
+}
+
+.ghost-btn:hover {
+  background: rgba(255,255,255,0.08);
+  transform: translateY(-2px);
+}
+
+/* FORMULARIOS */
+.auth-form-box {
+  width: 50%;
+
+  position: relative;
+
+  background: rgba(17, 24, 39, 0.92);
+
+  overflow: hidden;
+}
+
+.auth-container.show-register .auth-form-box {
+  transform: translateX(-100%);
+}
+
+.form-layer {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 44px 44px 36px;
+
+  opacity: 0;
+
+  transform: translateX(35px);
+
+  pointer-events: none;
+
+  transition:
+    opacity 0.45s ease,
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.form-layer.visible {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.login-layer {
+  z-index: 2;
+}
+
+.register-layer {
+  z-index: 1;
+}
+
+.auth-container.show-register .register-layer {
+  z-index: 3;
+}
+
+.auth-form-box app-login,
+.auth-form-box app-register {
+  display: block;
+  width: 100%;
+}
+
+/* MOBILE */
+@media (max-width: 900px) {
+
+  .auth-page {
+    padding: 16px;
+  }
+
+  .auth-container {
+    flex-direction: column;
+  }
+
+  .auth-panel,
+  .auth-form-box {
+    width: 100%;
+    transform: none !important;
+  }
+
+  .auth-panel {
+    min-height: 240px;
+    padding: 30px 20px;
+  }
+
+  .form-layer {
+    position: relative;
+
+    opacity: 1 !important;
+    transform: none !important;
+
+    pointer-events: auto !important;
+
+    padding: 28px 20px;
+  }
+
+  .register-layer:not(.visible),
+  .login-layer:not(.visible) {
+    display: none;
+  }
+
+  .welcome-text {
+    font-size: 28px;
+  }
+
+  .welcome-subtext {
+    font-size: 15px;
+  }
+
+  .university-logo {
+    width: 95%;
+    max-width: 320px;
+  }
+}
+
+@media (max-width: 520px) {
+
+  .welcome-text {
+    font-size: 24px;
+  }
+
+  .university-logo {
+    max-width: 240px;
+  }
+}

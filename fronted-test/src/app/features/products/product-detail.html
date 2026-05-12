@@ -1,0 +1,37 @@
+<div class="container">
+  <button (click)="back()">Volver</button>
+
+  <div *ngIf="loading">Cargando producto...</div>
+  <div *ngIf="error">{{ error }}</div>
+
+  <div *ngIf="product">
+
+    <!-- IMAGEN -->
+    <div class="image-section">
+      <img *ngIf="product.image_url" [src]="product.image_url"
+           alt="{{ product.commercial_name }}" class="product-img" />
+      <div *ngIf="!product.image_url" class="no-image">Sin imagen</div>
+
+      <button (click)="editingImage = !editingImage">
+        {{ product.image_url ? 'Cambiar imagen' : 'Agregar imagen' }}
+      </button>
+
+      <div *ngIf="editingImage" class="image-edit">
+        <input type="text" [(ngModel)]="newImageUrl" placeholder="Pega la URL de la imagen" />
+        <button (click)="saveImage()" [disabled]="savingImage">
+          {{ savingImage ? 'Guardando...' : 'Guardar' }}
+        </button>
+      </div>
+    </div>
+
+    <h2>{{ product.commercial_name || product.generic_name }}</h2>
+    <p><strong>Genérico:</strong> {{ product.generic_name }}</p>
+    <p><strong>Concentración:</strong> {{ product.concentration }}</p>
+    <p><strong>Forma farmacéutica:</strong> {{ product.pharmaceutical_form }}</p>
+    <p><strong>Dosificación:</strong> {{ product.dosage }}</p>
+    <p><strong>Notas:</strong> {{ product.notes }}</p>
+    <p><strong>Grupo terapéutico:</strong> {{ product.therapeutic_group }}</p>
+    <p><strong>Laboratorio:</strong> {{ product.laboratory }}</p>
+    <p><strong>Categoría:</strong> {{ product.category }}</p>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<div class="container">
+  <h1>Categorías</h1>
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let c of categories">
+          <td>{{ c.id }}</td>
+          <td class="category-name">{{ c.name }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 🔥 SIN DATOS -->
+    <div *ngIf="categories.length === 0" class="empty">
+      No hay categorías disponibles
+    </div>
+
+  </div>
+</div>

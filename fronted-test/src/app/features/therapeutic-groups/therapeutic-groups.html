@@ -1,0 +1,23 @@
+<div class="container">
+  <h1>therapeutic_groups</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>mechanism</th>
+        <th>description</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let g of therapeutic_groups">
+        <td>{{ g.id }}</td>
+        <td>{{ g.name }}</td>
+        <td>{{ g.mechanism }}</td>
+        <td>{{ g.description }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
