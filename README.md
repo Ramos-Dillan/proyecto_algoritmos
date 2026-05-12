@@ -22,7 +22,7 @@ Sistema de gestión farmacéutica que permite:
 
 ---
 
-## 🗂️ Estructura del Proyecto
+## 🗂️ Estructura del Proyecto — Backend
 
 ```
 proyecto_algoritmos/
@@ -74,7 +74,7 @@ Role            (1) ──── (N) User
 
 ---
 
-## ⚙️ Instalación y Ejecución
+## ⚙️ Instalación y Ejecución — Backend
 
 ### 1️⃣ Clonar el repositorio
 
@@ -421,7 +421,7 @@ Ejemplo: `GET /product/filter?search=paracetamol&page=1&per_page=10`
 
 ---
 
-## 📦 Dependencias principales
+## 📦 Dependencias principales — Backend
 
 ```
 Flask==3.1.3
@@ -432,6 +432,264 @@ psycopg2-binary==2.9.11
 python-dotenv==1.2.2
 SQLAlchemy==2.0.47
 Werkzeug==3.1.6
+```
+
+---
+
+---
+
+# 🖥️ Frontend — Vademécum CES
+
+Interfaz web desarrollada en **Angular 21** para consumir la API REST del vademécum institucional. Permite autenticación, navegación por roles, gestión de productos, laboratorios, categorías, grupos terapéuticos, usuarios y visualización del dashboard.
+
+**Framework:** Angular 21  
+**Puerto por defecto:** `http://localhost:4200`  
+**API base:** `http://localhost:5000`
+
+---
+
+## 🎨 Descripción de la Interfaz
+
+La aplicación cuenta con un diseño oscuro moderno, orientado a entornos clínicos y académicos. Todas las vistas siguen una paleta de colores consistente basada en tonos azules y grises oscuros, con acentos en cyan y gradientes tipo neón que refuerzan la identidad visual del sistema.
+
+### 🔐 Pantalla de Login
+
+Pantalla de acceso dividida en dos secciones: el lado izquierdo presenta la identidad de la plataforma con el logo de **Universidad CES** y un botón de registro; el lado derecho contiene el formulario de inicio de sesión con campos de email y contraseña, un enlace de recuperación de contraseña, el botón principal de **Login** y accesos rápidos mediante íconos de Google, Facebook, GitHub y LinkedIn. El fondo usa una imagen ambiental de laboratorio con cápsulas flotantes que refuerza la temática farmacéutica.
+
+### 🏠 Vista Home (Panel principal)
+
+Página de bienvenida tras el login, organizada en tarjetas informativas. Muestra la arquitectura del sistema con los módulos disponibles (Productos, Laboratorios, Categorías, Grupos Terapéuticos, Usuarios & Roles), una descripción de las capacidades de la plataforma y botones de acceso rápido a **Explorar productos** y **Ver dashboard**. En la parte inferior se presentan tarjetas destacando los cuatro pilares del sistema: Gestión de Productos, Control de Usuarios, Dashboard Inteligente y Seguridad y Trazabilidad.
+
+### 📊 Vista Dashboard
+
+Panel de estadísticas en tiempo real compuesto por:
+- **Tarjetas de resumen** en la parte superior con conteo de Usuarios, Productos, Grupos terapéuticos y Productos activos.
+- **Gráfica de actividad del sistema** (línea) que muestra la distribución entre Usuarios, Productos, Labs y Grupos.
+- **Gráfica de estado de productos** (dona) que diferencia entre productos activos e inactivos.
+- **Gráfica de productos por categorías** (barras) con el desglose por cada categoría registrada.
+
+### 🧭 Navegación y Layout
+
+La aplicación usa dos layouts diferenciados:
+- **`auth-shell`**: layout minimalista para rutas públicas (login, registro, recuperación de contraseña), sin barra lateral ni encabezado de sesión.
+- **`shell`**: layout principal para rutas protegidas, con barra lateral izquierda de navegación (Home, Productos, Usuarios, Dashboard) y barra superior con el nombre y rol del usuario autenticado. El sidebar es colapsable mediante un botón de menú.
+
+---
+
+## 🗂️ Estructura del Proyecto — Frontend
+
+```
+fronted-test/src/app/
+├── app.config.ts                    # Configuración principal de la app
+├── app.html                         # Shell HTML raíz
+├── app.routes.ts                    # Definición de rutas
+├── app.scss                         # Estilos globales
+├── app.spec.ts                      # Pruebas del componente raíz
+├── app.ts                           # Componente raíz
+│
+├── features/
+│   ├── categories/                  # Gestión de categorías
+│   │   ├── categories.html
+│   │   ├── categories.scss
+│   │   └── categories.ts
+│   │
+│   ├── dashboard/                   # Dashboard con estadísticas
+│   │   ├── dashboard.html
+│   │   ├── dashboard.scss
+│   │   └── dashboard.ts
+│   │
+│   ├── forgot-password/             # Solicitud de reset de contraseña
+│   │   ├── forgot-password.html
+│   │   ├── forgot-password.scss
+│   │   └── forgot-password.ts
+│   │
+│   ├── guards/                      # Guards de rutas
+│   │   ├── auth.guards.ts           # Verifica sesión activa (JWT)
+│   │   └── role.guard.ts            # Verifica rol del usuario
+│   │
+│   ├── home/                        # Página de inicio
+│   │   ├── home.html
+│   │   ├── home.scss
+│   │   └── home.ts
+│   │
+│   ├── layout/
+│   │   ├── auth-shell/              # Layout para rutas públicas (login, register)
+│   │   │   ├── auth-shell.html
+│   │   │   ├── auth-shell.scss
+│   │   │   └── auth-shell.ts
+│   │   └── shell/                   # Layout para rutas protegidas (sidebar, navbar)
+│   │       ├── shell.html
+│   │       ├── shell.scss
+│   │       └── shell.ts
+│   │
+│   ├── login/                       # Inicio de sesión
+│   │   ├── login.html
+│   │   ├── login.scss
+│   │   └── login.ts
+│   │
+│   ├── products/                    # Listado y detalle de productos
+│   │   ├── product-detail.html
+│   │   ├── product-detail.scss
+│   │   ├── product-detail.ts
+│   │   ├── products.html
+│   │   ├── products.scss
+│   │   └── products.ts
+│   │
+│   ├── register/                    # Registro de nuevos usuarios
+│   │   ├── register.html
+│   │   ├── register.scss
+│   │   └── register.ts
+│   │
+│   ├── reset-password/              # Restablecimiento de contraseña
+│   │   ├── reset-password.html
+│   │   ├── reset-password.scss
+│   │   └── reset-password.ts
+│   │
+│   ├── roles/                       # Gestión de roles
+│   │   ├── roles.html
+│   │   ├── roles.scss
+│   │   └── roles.ts
+│   │
+│   ├── therapeutic-groups/          # Gestión de grupos terapéuticos
+│   │   ├── therapeutic-groups.html
+│   │   ├── therapeutic-groups.scss
+│   │   └── therapeutic-groups.ts
+│   │
+│   └── users/                       # Gestión de usuarios
+│       ├── users.html
+│       ├── users.scss
+│       └── users.ts
+│
+├── interceptors/
+│   └── auth.interceptor.ts          # Adjunta JWT a cada petición HTTP
+│
+└── service/
+    ├── loginservice/
+    │   └── login_service.ts         # Autenticación y manejo de sesión
+    ├── productService/
+    │   └── productService.ts        # CRUD de productos y filtros
+    └── userService/
+        └── userService.ts           # CRUD de usuarios
+```
+
+---
+
+## 🔐 Guards de Rutas
+
+| Guard | Archivo | Descripción |
+|---|---|---|
+| `AuthGuard` | `auth.guards.ts` | Redirige al login si no hay sesión activa |
+| `RoleGuard` | `role.guard.ts` | Restringe acceso a rutas según el rol del usuario |
+
+Las rutas protegidas verifican el JWT almacenado localmente. Si el token es inválido o expiró, el usuario es redirigido automáticamente al login.
+
+---
+
+## 🌐 Interceptor HTTP
+
+`auth.interceptor.ts` intercepta todas las peticiones salientes y adjunta automáticamente el token JWT en el header:
+
+```
+Authorization: Bearer <access_token>
+```
+
+Esto evita tener que configurar el header manualmente en cada servicio.
+
+---
+
+## 🛠️ Servicios
+
+| Servicio | Archivo | Responsabilidad |
+|---|---|---|
+| `LoginService` | `login_service.ts` | Login, logout, almacenamiento y lectura del token y datos del usuario |
+| `ProductService` | `productService.ts` | Obtener, crear, actualizar, eliminar y filtrar productos |
+| `UserService` | `userService.ts` | Obtener, actualizar y eliminar usuarios |
+
+---
+
+## 🗺️ Vistas y Rutas
+
+| Vista | Ruta | Acceso | Descripción |
+|---|---|---|---|
+| Login | `/login` | Público | Inicio de sesión |
+| Register | `/register` | Público | Registro de nuevo usuario |
+| Forgot Password | `/forgot-password` | Público | Solicitar reset por correo |
+| Reset Password | `/reset-password` | Público | Restablecer contraseña con token |
+| Home | `/home` | Autenticado | Página principal |
+| Dashboard | `/dashboard` | Autenticado | Estadísticas y gráficas |
+| Products | `/products` | Autenticado | Listado de medicamentos con filtros |
+| Product Detail | `/products/:id` | Autenticado | Detalle de un medicamento |
+| Categories | `/categories` | Autenticado | Gestión de categorías |
+| Therapeutic Groups | `/therapeutic-groups` | Autenticado | Gestión de grupos terapéuticos |
+| Roles | `/roles` | admin | Gestión de roles |
+| Users | `/users` | admin | Gestión de usuarios |
+
+---
+
+## ⚙️ Instalación y Ejecución — Frontend
+
+### 1️⃣ Acceder al directorio del frontend
+
+```bash
+cd fronted-test
+```
+
+### 2️⃣ Instalar dependencias
+
+```bash
+npm install
+```
+
+### 3️⃣ Configurar la URL de la API
+
+En `src/environments/environment.ts`:
+
+```typescript
+export const environment = {
+  production: false,
+  apiBaseURL: 'http://localhost:5000'
+};
+```
+
+### 4️⃣ Ejecutar el servidor de desarrollo
+
+```bash
+npm start
+# o
+ng serve
+```
+
+Aplicación disponible en: `http://localhost:4200`
+
+### 5️⃣ Build de producción
+
+```bash
+npm run build
+```
+
+Los archivos compilados quedan en `dist/`.
+
+---
+
+## 📦 Dependencias principales — Frontend
+
+```
+@angular/core             ^21.2.0    Framework principal
+@angular/router           ^21.2.0    Navegación y rutas
+@angular/forms            ^21.2.0    Formularios reactivos y de plantilla
+@angular/common           ^21.2.0    HTTP client y utilidades
+chart.js                  ^4.5.1     Librería de gráficas
+ng2-charts                ^10.0.0    Wrapper Angular para Chart.js
+@fortawesome/fontawesome-free  ^7.2.0    Íconos
+rxjs                      ~7.8.0     Programación reactiva
+```
+
+**Herramientas de desarrollo:**
+```
+@angular/cli              ^21.2.9
+typescript                ~5.9.2
+prettier                  ^3.8.1
+vitest                    ^4.0.8
 ```
 
 ---
