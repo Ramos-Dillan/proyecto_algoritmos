@@ -28,8 +28,7 @@ def create_app():
     methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],  # ✅ agrega PATCH
     supports_credentials=True
 )
-
-    # ✅ Preflight handler
+    
     @app.before_request
     def handle_options():
         if flask_request.method == "OPTIONS":

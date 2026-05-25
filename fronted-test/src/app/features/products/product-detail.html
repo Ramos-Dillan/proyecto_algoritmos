@@ -1,18 +1,21 @@
 <div class="container">
-  <button (click)="back()">Volver</button>
+
+  <button class="btn-back" (click)="back()">← Volver</button>
 
   <div *ngIf="loading">Cargando producto...</div>
   <div *ngIf="error">{{ error }}</div>
 
-  <div *ngIf="product">
+  <div *ngIf="product" class="detail-layout">
 
-    <!-- IMAGEN -->
-    <div class="image-section">
-      <img *ngIf="product.image_url" [src]="product.image_url"
-           alt="{{ product.commercial_name }}" class="product-img" />
-      <div *ngIf="!product.image_url" class="no-image">Sin imagen</div>
+    <!-- COLUMNA IZQUIERDA -->
+    <div class="left-col">
+      <div class="image-wrapper">
+        <img *ngIf="product.image_url" [src]="product.image_url"
+             alt="{{ product.commercial_name }}" class="product-img" />
+        <div *ngIf="!product.image_url" class="no-image">Sin imagen</div>
+      </div>
 
-      <button (click)="editingImage = !editingImage">
+      <button (click)="editingImage = !editingImage" class="btn-img">
         {{ product.image_url ? 'Cambiar imagen' : 'Agregar imagen' }}
       </button>
 
@@ -24,14 +27,51 @@
       </div>
     </div>
 
-    <h2>{{ product.commercial_name || product.generic_name }}</h2>
-    <p><strong>Genérico:</strong> {{ product.generic_name }}</p>
-    <p><strong>Concentración:</strong> {{ product.concentration }}</p>
-    <p><strong>Forma farmacéutica:</strong> {{ product.pharmaceutical_form }}</p>
-    <p><strong>Dosificación:</strong> {{ product.dosage }}</p>
-    <p><strong>Notas:</strong> {{ product.notes }}</p>
-    <p><strong>Grupo terapéutico:</strong> {{ product.therapeutic_group }}</p>
-    <p><strong>Laboratorio:</strong> {{ product.laboratory }}</p>
-    <p><strong>Categoría:</strong> {{ product.category }}</p>
+    <!-- COLUMNA DERECHA -->
+    <div class="right-col">
+      <h2>{{ product.commercial_name || product.generic_name }}</h2>
+
+      <div class="fields-grid">
+        <div class="field-chip">
+          <span class="chip-label">Genérico</span>
+          <span class="chip-value">{{ product.generic_name }}</span>
+        </div>
+        <div class="field-chip">
+          <span class="chip-label">Concentración</span>
+          <span class="chip-value">{{ product.concentration }}</span>
+        </div>
+        <div class="field-chip">
+          <span class="chip-label">Forma farmacéutica</span>
+          <span class="chip-value">{{ product.pharmaceutical_form }}</span>
+        </div>
+        <div class="field-chip">
+          <span class="chip-label">Dosificación</span>
+          <span class="chip-value">{{ product.dosage }}</span>
+        </div>
+        <div class="field-chip">
+          <span class="chip-label">Grupo terapéutico</span>
+          <span class="chip-value">{{ product.therapeutic_group }}</span>
+        </div>
+        <div class="field-chip">
+          <span class="chip-label">Laboratorio</span>
+          <span class="chip-value">{{ product.laboratory }}</span>
+        </div>
+        <div class="field-chip">
+          <span class="chip-label">Categoría</span>
+          <span class="chip-value">{{ product.category }}</span>
+        </div>
+        <div class="field-chip">
+          <span class="chip-label">Estado</span>
+          <span class="chip-value" [style.color]="product.is_active ? '#3fb950' : '#f85149'">
+            {{ product.is_active ? 'Activo' : 'Inactivo' }}
+          </span>
+        </div>
+        <div class="field-chip full-width">
+          <span class="chip-label">Notas</span>
+          <span class="chip-value">{{ product.notes }}</span>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
