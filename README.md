@@ -15,6 +15,7 @@ Sistema de gestión farmacéutica que permite:
 - ✅ **Dashboard** con estadísticas en tiempo real
 - ✅ Recuperación de contraseña por correo electrónico
 - ✅ Filtros y paginación en productos
+- ✅ **Asistente IA Oftalmológico** integrado al vademécum
 
 **Base de datos:** PostgreSQL  
 **Nombre DB:** `vademecumDB`  
@@ -32,6 +33,7 @@ proyecto_algoritmos/
 │   ├── db.py                    # Conexión SQLAlchemy
 │   └── models.py                # Modelos ORM
 ├── routes/
+│   ├── assistant/               # Asistente IA oftalmológico
 │   ├── auth/                    # Autenticación y usuarios
 │   ├── categories/              # Categorías
 │   ├── dashboard/               # Dashboard y estadísticas
@@ -108,6 +110,9 @@ Crear archivo `.env` en la raíz:
 ```env
 DATABASE_URL=postgresql://usuario:password@localhost:5432/vademecumDB
 SECRET_KEY=clave_secreta_jwt
+
+# Asistente IA (Gemini)
+GEMINI_API_KEY=tu_api_key_de_gemini
 
 # Correo para recuperación de contraseña (opcional en dev)
 SMTP_HOST=smtp.gmail.com
@@ -387,6 +392,66 @@ Ejemplo: `GET /product/filter?search=paracetamol&page=1&per_page=10`
 
 ---
 
+### 🤖 Asistente IA Oftalmológico — `/assistant`
+
+> Requiere JWT. Powered by **Google Gemini**.
+
+| Método | Endpoint | Descripción |
+|---|---|---|
+| POST | `/assistant/chat` | Enviar consulta al asistente IA |
+
+#### ¿Qué puede hacer el asistente?
+
+El asistente clínico oftalmológico responde tres tipos de consultas, usando exclusivamente los medicamentos registrados en el vademécum de la plataforma:
+
+| Tipo de consulta | Ejemplo | Respuesta |
+|---|---|---|
+| **Por síntomas** | "Tengo ojo rojo y secreción amarilla" | Posible diagnóstico + medicamentos del vademécum con dosis |
+| **Por medicamento** | "¿Para qué sirve la Ofloxacina?" | Descripción, usos, dosis y notas del medicamento |
+| **Por diagnóstico** | "¿Qué se usa para conjuntivitis bacteriana?" | Lista de medicamentos disponibles con dosificación |
+
+> ⚠️ El asistente siempre incluye el aviso: *"Esto es orientativo, consulta con tu oftalmólogo"*. No inventa medicamentos — solo recomienda los que existen en la base de datos.
+
+#### POST `/assistant/chat`
+
+**Request:**
+```json
+{
+  "message": "Tengo ojo rojo y secreción amarilla, ¿qué medicamento uso?"
+}
+```
+
+**Response:**
+```json
+{
+  "status": "success",
+  "data": {
+    "response": "Basado en tus síntomas, podría tratarse de una conjuntivitis bacteriana. Los medicamentos disponibles en el vademécum son:\n\n- Oflox (Ofloxacina 0.3%): 1 gota cada 6 horas por 7 días.\n- Ophthabracin (Tobramicina 0.3%): 1 gota cada 6 horas por 7 días.\n\nEsto es orientativo, consulta con tu oftalmólogo.",
+    "user_message": "Tengo ojo rojo y secreción amarilla, ¿qué medicamento uso?"
+  }
+}
+```
+
+#### Configuración del asistente
+
+El asistente requiere una API key de Google Gemini. Agrégala al `.env`:
+
+```env
+GEMINI_API_KEY=AIzaSy_tu_api_key_aqui
+```
+
+Para obtener una key gratuita: [aistudio.google.com](https://aistudio.google.com)
+
+Instalar la librería de Gemini:
+
+```bash
+pip install google-genai
+```
+
+El modelo utilizado es `gemini-2.5-flash`, con un límite de 250 requests/día en el free tier.
+
+---
+
 ### 📊 Dashboard — `/dashboard`
 
 > Requiere JWT.
@@ -432,6 +497,7 @@ psycopg2-binary==2.9.11
 python-dotenv==1.2.2
 SQLAlchemy==2.0.47
 Werkzeug==3.1.6
+google-genai                # Asistente IA con Google Gemini
 ```
 
 ---
@@ -458,7 +524,11 @@ Pantalla de acceso dividida en dos secciones: el lado izquierdo presenta la iden
 
 ### 🏠 Vista Home (Panel principal)
 
-Página de bienvenida tras el login, organizada en tarjetas informativas. Muestra la arquitectura del sistema con los módulos disponibles (Productos, Laboratorios, Categorías, Grupos Terapéuticos, Usuarios & Roles), una descripción de las capacidades de la plataforma y botones de acceso rápido a **Explorar productos** y **Ver dashboard**. En la parte inferior se presentan tarjetas destacando los cuatro pilares del sistema: Gestión de Productos, Control de Usuarios, Dashboard Inteligente y Seguridad y Trazabilidad.
+Página de bienvenida tras el login, organizada en tarjetas informativas. Muestra la arquitectura del sistema con los módulos disponibles (Productos, Laboratorios, Categorías, Grupos Terapéuticos, Usuarios & Roles), una descripción de las capacidades de la plataforma y botones de acceso rápido a **Explorar productos** y **Ver dashboard**. En la parte inferior se presentan tarjetas destacando los cuatro pilares del sistema: Gestión de Productos, Control de Usuarios, Dashboard Inteligente, Seguridad y Trazabilidad, y el nuevo **Asistente IA Oftalmológico**.
+
+### 🤖 Asistente IA (Chat flotante)
+
+Botón flotante permanente en la esquina inferior derecha de la interfaz, visible en todas las vistas protegidas. Al hacer clic, abre un panel de chat con diseño oscuro integrado al estilo de la plataforma. El asistente responde consultas sobre síntomas oculares, medicamentos específicos y diagnósticos, usando únicamente los productos registrados en el vademécum. La tarjeta de inicio también actúa como acceso directo al chat.
 
 ### 📊 Vista Dashboard
 
@@ -481,11 +551,11 @@ La aplicación usa dos layouts diferenciados:
 ```
 fronted-test/src/app/
 ├── app.config.ts                    # Configuración principal de la app
-├── app.html                         # Shell HTML raíz
+├── app.html                         # Shell HTML raíz (incluye chat flotante IA)
 ├── app.routes.ts                    # Definición de rutas
-├── app.scss                         # Estilos globales
+├── app.scss                         # Estilos globales (incluye estilos del chat)
 ├── app.spec.ts                      # Pruebas del componente raíz
-├── app.ts                           # Componente raíz
+├── app.ts                           # Componente raíz (lógica del asistente IA)
 │
 ├── features/
 │   ├── categories/                  # Gestión de categorías
@@ -615,7 +685,7 @@ Esto evita tener que configurar el header manualmente en cada servicio.
 | Register | `/register` | Público | Registro de nuevo usuario |
 | Forgot Password | `/forgot-password` | Público | Solicitar reset por correo |
 | Reset Password | `/reset-password` | Público | Restablecer contraseña con token |
-| Home | `/home` | Autenticado | Página principal |
+| Home | `/home` | Autenticado | Página principal con acceso directo al asistente IA |
 | Dashboard | `/dashboard` | Autenticado | Estadísticas y gráficas |
 | Products | `/products` | Autenticado | Listado de medicamentos con filtros |
 | Product Detail | `/products/:id` | Autenticado | Detalle de un medicamento |
@@ -702,8 +772,8 @@ vitest                    ^4.0.8
 
 ## 👨‍💻 Autores
 
-**Dillan Ramos Barrera** 
+**Dillan Ramos Barrera**  
 **Santiago Ramirez**  
-**Samith Ramos** 
+**Samith Ramos**  
 Proyecto — Algoritmos  
 Ingeniería Biomédica
