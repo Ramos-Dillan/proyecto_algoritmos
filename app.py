@@ -11,7 +11,7 @@ from routes.therapeutic_groups.therapeutic_groups_routes import therapeutic_grou
 from routes.roles.roles_routes import roles_bp
 from routes.dashboard.dashboard_routes import dashboard_bp
 from routes.categories.categories_routes import categories_bp
-from routes.assistant.assistant import assistant_bp
+from routes.assistant.assistant_routes import assistant_bp
 
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
