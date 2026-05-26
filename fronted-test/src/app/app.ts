@@ -1,4 +1,4 @@
-import { Component, signal, ViewChild, ElementRef } from '@angular/core';
+import { Component, signal, ViewChild, ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
 import { RouterOutlet, RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -28,9 +28,17 @@ export class App {
   private apiUrl = 'http://localhost:5000';
   private publicRoutes = ['/auth', '/login', '/register', '/forgot-password', '/reset-password'];
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+    private ngZone: NgZone
+  ) {
     window.addEventListener('openChat', () => {
-      this.isChatOpen = true;
+      this.ngZone.run(() => {
+        this.isChatOpen = true;
+        this.cdr.detectChanges();
+      });
     });
   }
 
@@ -55,6 +63,7 @@ export class App {
     this.messages.push({ role: 'user', text });
     this.userInput = '';
     this.isLoading = true;
+    this.cdr.detectChanges();
     this.scrollToBottom();
 
     const headers = new HttpHeaders({
@@ -65,14 +74,20 @@ export class App {
     this.http.post<any>(`${this.apiUrl}/assistant/chat`, { message: text }, { headers })
       .subscribe({
         next: (res) => {
-          this.messages.push({ role: 'bot', text: res.data.response });
-          this.isLoading = false;
-          this.scrollToBottom();
+          this.ngZone.run(() => {
+            this.messages.push({ role: 'bot', text: res.data.response });
+            this.isLoading = false;
+            this.cdr.detectChanges();
+            this.scrollToBottom();
+          });
         },
         error: () => {
-          this.messages.push({ role: 'bot', text: 'Error al conectar con el asistente. Intenta de nuevo.' });
-          this.isLoading = false;
-          this.scrollToBottom();
+          this.ngZone.run(() => {
+            this.messages.push({ role: 'bot', text: 'Error al conectar con el asistente. Intenta de nuevo.' });
+            this.isLoading = false;
+            this.cdr.detectChanges();
+            this.scrollToBottom();
+          });
         }
       });
   }
