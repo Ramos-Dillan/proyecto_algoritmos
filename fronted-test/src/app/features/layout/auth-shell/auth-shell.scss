@@ -37,7 +37,7 @@
 
 .auth-container {
   width: min(1180px, 100%);
-  min-height: 660px;
+  min-height: 720px; /* era 660px */
 
   display: flex;
 
@@ -63,10 +63,10 @@
 
   display: flex;
   justify-content: center;
-  align-items: flex-start;      /* ← CAMBIO: era center */
+  align-items: flex-start;
 
   padding: 42px;
-  padding-top: 56px;            /* ← CAMBIO: controla qué tan arriba queda */
+  padding-top: 56px;
 
   position: relative;
   overflow: hidden;
@@ -218,9 +218,9 @@
 
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start; /* era center */
 
-  padding: 44px 44px 36px;
+  padding: 56px 52px; /* era 44px 44px 36px */
 
   opacity: 0;
 

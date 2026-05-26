@@ -1,1 +1,42 @@
 <router-outlet></router-outlet>
+
+<!-- ASISTENTE IA FLOTANTE -->
+<div class="chat-bubble" (click)="toggleChat()" *ngIf="showChat">
+  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="8" width="18" height="14" rx="2"/>
+    <path d="M9 8V6a3 3 0 0 1 6 0v2"/>
+    <circle cx="9" cy="14" r="1.5" fill="white" stroke="none"/>
+    <circle cx="15" cy="14" r="1.5" fill="white" stroke="none"/>
+    <path d="M9 18h6"/>
+    <line x1="12" y1="3" x2="12" y2="4"/>
+  </svg>
+</div>
+
+<div class="chat-window" *ngIf="isChatOpen && showChat">
+  <div class="chat-header">
+    <span>🤖 Asistente Oftalmológico IA</span>
+    <button (click)="toggleChat()">✕</button>
+  </div>
+
+  <div class="chat-messages" #messagesContainer>
+    <div class="message bot">
+      <span>Hola! Soy tu asistente oftalmológico. Puedes preguntarme sobre síntomas, medicamentos o diagnósticos 👁️</span>
+    </div>
+    <div *ngFor="let msg of messages" [class]="'message ' + msg.role">
+      <span>{{ msg.text }}</span>
+    </div>
+    <div class="message bot" *ngIf="isLoading">
+      <span class="typing">Escribiendo...</span>
+    </div>
+  </div>
+
+  <div class="chat-input">
+    <input
+      type="text"
+      [(ngModel)]="userInput"
+      placeholder="Escribe tus síntomas o consulta..."
+      (keyup.enter)="sendMessage()"
+    />
+    <button (click)="sendMessage()" [disabled]="isLoading">➤</button>
+  </div>
+</div>

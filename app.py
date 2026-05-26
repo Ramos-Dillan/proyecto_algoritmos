@@ -11,6 +11,7 @@ from routes.therapeutic_groups.therapeutic_groups_routes import therapeutic_grou
 from routes.roles.roles_routes import roles_bp
 from routes.dashboard.dashboard_routes import dashboard_bp
 from routes.categories.categories_routes import categories_bp
+from routes.assistant.assistant import assistant_bp
 
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
@@ -57,6 +58,7 @@ def create_app():
     app.register_blueprint(roles_bp, url_prefix="/role")
     app.register_blueprint(dashboard_bp, url_prefix="/dashboard")
     app.register_blueprint(categories_bp, url_prefix="/categories")
+    app.register_blueprint(assistant_bp, url_prefix='/assistant')
 
     @app.route("/")
     def home():

@@ -62,5 +62,38 @@ shell.html:
     </div>
 
   </div>
+  <!-- ASISTENTE IA FLOTANTE -->
+<div class="chat-bubble" (click)="toggleChat()">
+  💊
+</div>
+
+<div class="chat-window" *ngIf="isChatOpen">
+  <div class="chat-header">
+    <span>🤖 Asistente Oftalmológico</span>
+    <button (click)="toggleChat()">✕</button>
+  </div>
+
+  <div class="chat-messages" #messagesContainer>
+    <div class="message bot">
+      <span>Hola! Soy tu asistente oftalmológico. Puedes preguntarme sobre síntomas, medicamentos o diagnósticos 👁️</span>
+    </div>
+    <div *ngFor="let msg of messages" [class]="'message ' + msg.role">
+      <span>{{ msg.text }}</span>
+    </div>
+    <div class="message bot" *ngIf="isLoading">
+      <span class="typing">Escribiendo...</span>
+    </div>
+  </div>
+
+  <div class="chat-input">
+    <input
+      type="text"
+      [(ngModel)]="userInput"
+      placeholder="Escribe tus síntomas o consulta..."
+      (keyup.enter)="sendMessage()"
+    />
+    <button (click)="sendMessage()" [disabled]="isLoading">➤</button>
+  </div>
+</div>
 
 </div>

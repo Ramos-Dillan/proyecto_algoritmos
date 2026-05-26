@@ -209,11 +209,11 @@
             </div>
           </div>
 
-          <div class="why-card">
-            <span class="why-icon">🌐</span>
+          <div class="why-card" style="cursor:pointer; border: 1px solid #40739e;" (click)="abrirAsistente()">
+            <span class="why-icon">🤖</span>
             <div>
-              <h4>Acceso centralizado</h4>
-              <p>Un solo punto de acceso para toda la información farmacéutica institucional, disponible desde cualquier dispositivo.</p>
+              <h4>Asistente IA Oftalmológico</h4>
+              <p>Consulta síntomas, diagnósticos y medicamentos en tiempo real con nuestro asistente inteligente integrado al vademécum.</p>
             </div>
           </div>
         </div>
@@ -255,19 +255,19 @@
       <div class="modal-body">
 
         <div class="modal-field">
-  <label>Usuario</label>
-  <input type="text" [(ngModel)]="editForm.username" placeholder="Nombre de usuario" autocomplete="off" />
-</div>
+          <label>Usuario</label>
+          <input type="text" [(ngModel)]="editForm.username" placeholder="Nombre de usuario" autocomplete="off" />
+        </div>
 
-<div class="modal-field">
-  <label>Correo</label>
-  <input type="email" [(ngModel)]="editForm.email" placeholder="Correo electrónico" autocomplete="off" />
-</div>
+        <div class="modal-field">
+          <label>Correo</label>
+          <input type="email" [(ngModel)]="editForm.email" placeholder="Correo electrónico" autocomplete="off" />
+        </div>
 
-<div class="modal-field">
-  <label>Nueva contraseña <span class="optional">(opcional)</span></label>
-  <input type="password" [(ngModel)]="editForm.password" placeholder="Dejar vacío para no cambiar" autocomplete="new-password" />
-</div>
+        <div class="modal-field">
+          <label>Nueva contraseña <span class="optional">(opcional)</span></label>
+          <input type="password" [(ngModel)]="editForm.password" placeholder="Dejar vacío para no cambiar" autocomplete="new-password" />
+        </div>
 
         <div class="modal-error" *ngIf="editError">{{ editError }}</div>
         <div class="modal-success" *ngIf="editSuccess">{{ editSuccess }}</div>

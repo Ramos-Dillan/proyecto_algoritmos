@@ -160,6 +160,10 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  abrirAsistente() {
+    window.dispatchEvent(new CustomEvent('openChat'));
+  }
+
   logout() {
     localStorage.clear();
     this.router.navigateByUrl('/login', { replaceUrl: true });
